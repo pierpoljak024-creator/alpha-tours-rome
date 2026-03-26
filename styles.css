@@ -1,6 +1,6 @@
 /* ============================================================
    ALPHA TOURS — styles.css
-   Rome Tour Company | www.rome-tourguide.com
+   Rome Tour Company | alphatoursrome.com
    ============================================================ */
 
 /* ── Custom Properties ── */
@@ -89,7 +89,7 @@ input, select, textarea { font-family: inherit; }
   flex-shrink: 0;
   text-decoration: none;
 }
-.nav-logo img { height: 44px; width: auto; }
+.nav-logo img { height: 52px; width: auto; }
 .nav-logo-text {
   font-family: var(--font-heading);
   font-size: 1.15rem;
