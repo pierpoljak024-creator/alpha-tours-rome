@@ -1,9 +1,28 @@
 # Alpha Tours Website Project
 
 ## Brand Identity
-- Company: Alpha Tours – Rome tour company
-- Tagline: "Your Local Experts for Unforgettable Experiences!"
-- New tagline from brochure: "Discover Your Way!" / "Live the Dolce Vita!"
+- Company: **Alpha Tours** – Rome-based boutique tour company
+- Official website: alphatoursrome.com (also www.rome-tourguide.com)
+- Phone / WhatsApp: +39 375 829 7864
+- Instagram: @alphatoursrome
+- Facebook: Rome-Tour-guide-104817567778940
+- Based in: Rome, Italy
+
+### Taglines & Slogans (from brochures)
+- "Your Local Experts for Unforgettable Experiences!"
+- "Discover Rome Your Way!"
+- "Live the Dolce Vita!"
+- "Let us take the lead"
+- "Eat Like a Roman!" (food tours)
+
+### Brand Voice
+- Warm, knowledgeable, proud Roman locals
+- Emphasise: private, personalised, no group buses, no rushing
+- Key differentiators: 20+ years experience, all licensed guides, skip-the-line VIP access
+- Tagline adjectives: authentic, unforgettable, local, exclusive
+
+### Footer tagline trio (used in brochures)
+- "Local Guides · Authentic Tours · Memorable Moments"
 
 ## Color Palette
 - Primary Green: #324e2c
@@ -12,21 +31,33 @@
 - Accent Orange: #f5b35d
 
 ## Logo
-- File: alpha-logo.svg (white-contour version for use on dark backgrounds)
-- Always use `alpha-logo.svg` from the project root — never invent or substitute logos
+- **Official logo**: `Branding/brand_assets/logos/variants/4.svg` — the canonical Alpha Tours logo
+- **Full branded logo** (with text/layout): `Branding/brand_assets/logos/LOGO ALPHA.svg`
+- **Production logo** (used in all HTML): `alpha-logo.svg` in project root — white-contour version for dark backgrounds
+- Always use `alpha-logo.svg` from the project root in HTML — never invent or substitute logos
 
 ## Brand Assets
-- All logos and source SVGs live in `Branding/` and `Branding/logo bg/`
-- Photos: `hero.jpg` (tours banner), `about.jpg` (services/food banner) — both in project root
-- Always check the project root and `Branding/` before using placeholders
+```
+Branding/
+  brand_assets/
+    logos/          ← LOGO ALPHA.svg (full branded logo)
+      variants/     ← 4.svg (official logo)
+    brochures/      ← brochure & marketing photos (jpeg)
+      brochure-food-transfer.jpeg   ← food tour + van transfer brochure
+      brochure-tours.jpeg           ← golf cart, vespa, fiat 500 brochure
+      logo-colosseum.jpeg           ← Colosseum illustration logo
+    guidelines/     ← colour-palette.md
+```
+- Site photos: `hero.jpg` (hero/tours banner), `about.jpg` (food/services banner) — both in project root
+- Always check `Branding/brand_assets/` before using placeholders
 
-## Services (from brochure)
-- Golf Cart Tours
-- Vespa Sidecar
-- FIAT 500 Vintage Tour
-- Food Tours (Wine, Pizza, Gelato, Hidden Trattorias)
-- Private Day Trips
-- Airport & Hotel Transfers
+## Services (from brochures — use these exact descriptions)
+- **Golf Cart Tours** — Shared & Private. Comfortable & Eco-Friendly. See All Top Landmarks. Flexible & Fun for Everyone. Up to 7 guests.
+- **Vespa Sidecar** — Romantic & Unique Ride. Feel the Real Rome. Perfect for Photos & Memories.
+- **FIAT 500 Vintage Tour** — Classic Italian Style. Drive Through Iconic Streets. A True Dolce Vita Experience.
+- **Food Tours** — "Eat Like a Roman!" Taste Local Specialties. Visit Hidden Trattorias. Wine, Pizza & Gelato. Real Roman Recipes.
+- **Van Transfer** — Airport Pick-Up & Drop-Off. Hotel Transfers. Private Day Trips. Comfort & Safety.
+- **Private Day Trips** — Tailored escapes to Tivoli, Ostia Antica, Castelli Romani and beyond.
 
 ## Content from existing site
 - About: Over 20 years of experience, licensed guides
