@@ -143,6 +143,60 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+/* ── Scroll-Driven Video ── */
+(function () {
+  const section     = document.querySelector('.scroll-video-section');
+  const video       = document.querySelector('.scroll-video');
+  const bar         = document.querySelector('.scroll-video-progress-bar');
+  const content     = document.querySelector('.scroll-video-content');
+  if (!section || !video) return;
+
+  video.pause();
+  video.currentTime = 0;
+
+  let targetProgress  = 0;
+  let displayProgress = 0;
+  let ticking         = false;
+
+  function getProgress() {
+    const rect      = section.getBoundingClientRect();
+    const scrollable = section.offsetHeight - window.innerHeight;
+    return Math.max(0, Math.min(1, -rect.top / scrollable));
+  }
+
+  function tick() {
+    // Lerp toward target for buttery smoothness
+    displayProgress += (targetProgress - displayProgress) * 0.14;
+
+    if (video.duration && isFinite(video.duration)) {
+      const t = displayProgress * video.duration;
+      if (Math.abs(video.currentTime - t) > 0.015) {
+        video.currentTime = t;
+      }
+    }
+
+    if (bar) bar.style.width = (displayProgress * 100) + '%';
+    if (content) {
+      const inView = displayProgress > 0.06 && displayProgress < 0.94;
+      content.classList.toggle('visible', inView);
+    }
+
+    if (Math.abs(displayProgress - targetProgress) > 0.001) {
+      requestAnimationFrame(tick);
+    } else {
+      ticking = false;
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    targetProgress = getProgress();
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(tick);
+    }
+  }, { passive: true });
+}());
+
 /* ── Year in footer ── */
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();

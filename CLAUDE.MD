@@ -80,13 +80,33 @@ Branding/
 - To deploy: `git push origin main` (Netlify picks it up automatically, no manual step needed)
 - No `netlify.toml` needed — project root is the publish directory (static HTML site)
 
+## Local Dev Server
+- Start: `node serve.mjs` (serves project root at `http://localhost:3000`)
+- Supports HTTP range requests (required for video scrubbing)
+- `serve.mjs` lives in the project root
+
+## Screenshots (local only, not committed)
+- Puppeteer: `C:/Users/pierf/.cache/puppeteer/chrome/win64-146.0.7680.153/chrome-win64/chrome.exe`
+- Output folder: `temporary screenshots/` (git-ignored)
+- Command: `node -e "const p = require('puppeteer'); ..."` using the path above
+
+## Video Assets
+- Scroll-driven video: `assets/videos/fiat500-scrub.mp4`
+- Source (original): `Branding/brand_assets/Videos/b18b6f51-2e30-42e9-98f0-abb17f5e2e95.mp4`
+- Converted with FFmpeg: `-g 1` (keyframe every frame) for smooth scroll scrubbing
+- FFmpeg binary: `C:/Users/pierf/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffmpeg.exe`
+- To re-convert any video for scroll scrubbing:
+  ```
+  ffmpeg -i INPUT.mp4 -vf "scale=1920:-2" -c:v libx264 -g 1 -crf 26 -preset slow -an -movflags faststart OUTPUT.mp4 -y
+  ```
+
 ## Requirements
 - Fully responsive (mobile, tablet, desktop)
-- Hero section with a beautiful image of a vintage car or golf cart in Rome
-- Services grid with image-banner cards
+- Hero with photo bg, left-aligned text, tour-type filter chips
+- Services grid with per-tour gradient image-banner cards
+- Scroll-driven Fiat 500 exploded-view video section (homepage)
 - "Book Now" button linking to contact page
-- Scroll-triggered animation (e.g., a car sliding in)
-- Multi-page: Home, About, Services, Contact
+- Multi-page: Home, About, Services, Contact, Blog
 - SEO: meta descriptions, title tags, structured data
 
 ---
