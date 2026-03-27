@@ -73,10 +73,17 @@ Branding/
 - `styles.css` — All brand CSS (custom properties, grid, animations)
 - `script.js` — Nav toggle, IntersectionObserver, FAQ accordion, smooth scroll
 
+## Deployment
+- **GitHub repo:** https://github.com/pierpoljak024-creator/alpha-tours-rome
+- **Branch:** `main`
+- **Hosting:** Netlify — auto-deploys on every push to `main`
+- To deploy: `git push origin main` (Netlify picks it up automatically, no manual step needed)
+- No `netlify.toml` needed — project root is the publish directory (static HTML site)
+
 ## Requirements
 - Fully responsive (mobile, tablet, desktop)
 - Hero section with a beautiful image of a vintage car or golf cart in Rome
-- Services grid with icons
+- Services grid with image-banner cards
 - "Book Now" button linking to contact page
 - Scroll-triggered animation (e.g., a car sliding in)
 - Multi-page: Home, About, Services, Contact
