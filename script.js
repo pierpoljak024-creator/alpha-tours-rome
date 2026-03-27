@@ -35,7 +35,7 @@ document.addEventListener('click', e => {
 /* ── Sticky Header Shadow ── */
 const header = document.querySelector('.site-header');
 window.addEventListener('scroll', () => {
-  header?.classList.toggle('scrolled', window.scrollY > 8);
+  header?.classList.toggle('scrolled', window.scrollY > 80);
 }, { passive: true });
 
 /* ── Active Nav Link Highlighting ── */
