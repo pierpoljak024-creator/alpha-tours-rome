@@ -78,7 +78,35 @@ Branding/
 - **Branch:** `main`
 - **Hosting:** Netlify — auto-deploys on every push to `main`
 - To deploy: `git push origin main` (Netlify picks it up automatically, no manual step needed)
-- No `netlify.toml` needed — project root is the publish directory (static HTML site)
+
+### Netlify Configuration (Recommended)
+Add a `netlify.toml` file in the project root to optimise caching, redirects, and 404 handling:
+
+```toml
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+```
+Also include a `robots.txt` and `sitemap.xml` in the root for SEO.
 
 ## Local Dev Server
 - Start: `node serve.mjs` (serves project root at `http://localhost:3000`)
@@ -99,6 +127,14 @@ Branding/
   ```
   ffmpeg -i INPUT.mp4 -vf "scale=1920:-2" -c:v libx264 -g 1 -crf 26 -preset slow -an -movflags faststart OUTPUT.mp4 -y
   ```
+- **Video optimisation:** For better performance on Netlify free tier, keep the final video under ~5–10 MB. Use `-crf 26` (already set) and consider lowering resolution further if needed (e.g., `scale=1280:-2`). Test file size and playback smoothness.
+
+## Performance & SEO
+- **Lazy-load video:** Use `loading="lazy"` on `<video>` elements (or a placeholder) to avoid loading the video on every page.
+- **Image formats:** Convert large images to WebP with fallbacks for older browsers.
+- **Structured data:** Add JSON-LD for local business (Google recommended).
+- **Meta tags:** Ensure each page has a unique `<title>` and `<meta name="description">`.
+- **Accessibility:** Validate colour contrast, use semantic HTML, and provide `alt` text for all images.
 
 ## Requirements
 - Fully responsive (mobile, tablet, desktop)

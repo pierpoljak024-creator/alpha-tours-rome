@@ -154,6 +154,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   video.pause();
   video.currentTime = 0;
 
+  // Prime first frame on mobile (iOS/Android ignore preload)
+  function primeFirstFrame() {
+    video.play().then(() => { video.pause(); video.currentTime = 0; }).catch(() => {});
+  }
+  if (video.readyState >= 1) {
+    primeFirstFrame();
+  } else {
+    video.addEventListener('loadedmetadata', primeFirstFrame, { once: true });
+  }
+
   let targetProgress  = 0;
   let displayProgress = 0;
   let ticking         = false;
@@ -168,7 +178,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     // Lerp toward target for buttery smoothness
     displayProgress += (targetProgress - displayProgress) * 0.14;
 
-    if (video.duration && isFinite(video.duration)) {
+    if (video.duration && isFinite(video.duration) && video.readyState >= 2) {
       const t = displayProgress * video.duration;
       if (Math.abs(video.currentTime - t) > 0.015) {
         video.currentTime = t;

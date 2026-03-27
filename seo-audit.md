@@ -1,6 +1,6 @@
 # SEO Audit Report — Alpha Tours Rome
 **Date:** 2026-03-26
-**Site:** www.rome-tourguide.com
+**Site:** alphatoursrome.com
 **Pages audited:** index.html, about.html, services.html, contact.html, blog.html
 **Primary keyword:** "Rome golf cart tours"
 **Audited by:** /seo-optimizer skill
@@ -80,19 +80,19 @@ None critical. All blocking SEO/accessibility issues have been resolved in the g
 **Fix:** Once deployed to your domain, replace with absolute URLs:
 ```html
 <!-- index.html -->
-<link rel="canonical" href="https://www.rome-tourguide.com/" />
+<link rel="canonical" href="https://alphatoursrome.com/" />
 
 <!-- about.html -->
-<link rel="canonical" href="https://www.rome-tourguide.com/about.html" />
+<link rel="canonical" href="https://alphatoursrome.com/about.html" />
 
 <!-- services.html -->
-<link rel="canonical" href="https://www.rome-tourguide.com/services.html" />
+<link rel="canonical" href="https://alphatoursrome.com/services.html" />
 
 <!-- contact.html -->
-<link rel="canonical" href="https://www.rome-tourguide.com/contact.html" />
+<link rel="canonical" href="https://alphatoursrome.com/contact.html" />
 
 <!-- blog.html -->
-<link rel="canonical" href="https://www.rome-tourguide.com/blog.html" />
+<link rel="canonical" href="https://alphatoursrome.com/blog.html" />
 ```
 > **Impact:** High | **Effort:** Low — 5 lines to update post-deploy
 
@@ -119,12 +119,12 @@ None critical. All blocking SEO/accessibility issues have been resolved in the g
   "@context": "https://schema.org",
   "@type": "AboutPage",
   "name": "About Alpha Tours Rome",
-  "url": "https://www.rome-tourguide.com/about.html",
+  "url": "https://alphatoursrome.com/about.html",
   "description": "Alpha Tours — over 20 years of licensed guiding in Rome.",
   "mainEntity": {
     "@type": "TouristInformationCenter",
     "name": "Alpha Tours",
-    "url": "https://www.rome-tourguide.com"
+    "url": "https://alphatoursrome.com"
   }
 }
 </script>
@@ -136,7 +136,7 @@ Add to contact.html:
   "@context": "https://schema.org",
   "@type": "ContactPage",
   "name": "Contact Alpha Tours Rome",
-  "url": "https://www.rome-tourguide.com/contact.html",
+  "url": "https://alphatoursrome.com/contact.html",
   "mainEntity": {
     "@type": "TouristInformationCenter",
     "name": "Alpha Tours",
@@ -158,31 +158,31 @@ Add to contact.html:
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.rome-tourguide.com/</loc>
+    <loc>https://alphatoursrome.com/</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.rome-tourguide.com/about.html</loc>
+    <loc>https://alphatoursrome.com/about.html</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.rome-tourguide.com/services.html</loc>
+    <loc>https://alphatoursrome.com/services.html</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.rome-tourguide.com/blog.html</loc>
+    <loc>https://alphatoursrome.com/blog.html</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.rome-tourguide.com/contact.html</loc>
+    <loc>https://alphatoursrome.com/contact.html</loc>
     <lastmod>2026-03-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
@@ -194,14 +194,14 @@ Add to contact.html:
 ```
 User-agent: *
 Allow: /
-Sitemap: https://www.rome-tourguide.com/sitemap.xml
+Sitemap: https://alphatoursrome.com/sitemap.xml
 ```
 
 ---
 
 ### ⚠️ W5 — Open Graph image is a placeholder URL
 **Affected:** All pages
-**Issue:** `og:image` points to `https://www.rome-tourguide.com/hero.jpg` which doesn't exist yet.
+**Issue:** `og:image` points to `https://alphatoursrome.com/hero.jpg` which doesn't exist yet.
 **Fix:** After generating and uploading `hero.jpg`, this will resolve automatically since the URL is already correct. No code change needed post-deploy.
 
 ---
@@ -334,7 +334,7 @@ Run `styles.css` and `script.js` through a minifier (e.g., `npx terser script.js
 ## Next Steps Checklist
 
 - [ ] Generate hero.jpg from asset-prompts.md → uncomment hero img in index.html
-- [ ] Deploy to www.rome-tourguide.com
+- [ ] Deploy to alphatoursrome.com
 - [ ] Update all 5 canonical URLs to absolute
 - [ ] Create sitemap.xml and robots.txt (copy from W4 above)
 - [ ] Submit sitemap in Google Search Console
