@@ -31,10 +31,11 @@
 - Accent Orange: #f5b35d
 
 ## Logo
-- **Official logo**: `Branding/brand_assets/logos/variants/4.svg` — the canonical Alpha Tours logo
-- **Full branded logo** (with text/layout): `Branding/brand_assets/logos/LOGO ALPHA.svg`
-- **Production logo** (used in all HTML): `alpha-logo.svg` in project root — white-contour version for dark backgrounds
-- Always use `alpha-logo.svg` from the project root in HTML — never invent or substitute logos
+- **`alpha-logo.svg`** (root, 1.2MB) — full-colour logo with white background, embedded JPEG inside SVG (Canva AI export). Used ONLY in the footer with `loading="lazy"`. Do NOT use as favicon — it is too large.
+- **`alpha-logo.png`** (root, 69KB) — web-optimised PNG extracted from the SVG, 200×200px, white background. Use for any light-background contexts.
+- **`favicon.png`** (root, 8.7KB) — 64×64px favicon used via `<link rel="icon" href="favicon.png">` on all root pages, `<link rel="icon" href="../favicon.png">` on pages in `tours/`.
+- All SVGs in `Branding/` are also 1.2MB Canva JPEG-in-SVG exports — same issue. Do not use them directly in HTML.
+- **Logo is NOT shown in the header** (removed by user request). Footer only.
 
 ## Brand Assets
 ```
@@ -200,11 +201,27 @@ Also include a `robots.txt` and `sitemap.xml` in the root for SEO.
 - **Video optimisation:** For better performance on Netlify free tier, keep the final video under ~5–10 MB. Use `-crf 26` (already set) and consider lowering resolution further if needed (e.g., `scale=1280:-2`). Test file size and playback smoothness.
 
 ## Performance & SEO
-- **Lazy-load video:** Use `loading="lazy"` on `<video>` elements (or a placeholder) to avoid loading the video on every page.
-- **Image formats:** Convert large images to WebP with fallbacks for older browsers.
-- **Structured data:** Add JSON-LD for local business (Google recommended).
-- **Meta tags:** Ensure each page has a unique `<title>` and `<meta name="description">`.
-- **Accessibility:** Validate colour contrast, use semantic HTML, and provide `alt` text for all images.
+
+### Image compression rules
+- All images added to `Branding/brand_assets/Images/` MUST be compressed before use.
+- DSC/camera photos are typically 19–28MB raw — **always compress with FFmpeg first**:
+  ```
+  ffmpeg -i INPUT.jpg -vf "scale=900:-2" -q:v 4 OUTPUT.jpg -y
+  ```
+- Target: 100–300KB per image for web use.
+- Never commit raw camera photos to the repo.
+- `alpha-logo.svg` is a known 1.2MB file — do not use as `<img>` in performance-sensitive contexts. Use `alpha-logo.png` (69KB) for light backgrounds.
+
+### Caching
+- `netlify.toml` is in the project root with `Cache-Control: public, max-age=31536000, immutable` for all static assets.
+- HTML files are set to `max-age=0, must-revalidate` so deploys take effect immediately.
+- First visit loads all assets; repeat visits use browser cache — no re-download.
+
+### Other SEO
+- **Structured data:** JSON-LD for local business present in index.html.
+- **Meta tags:** Each page has a unique `<title>` and `<meta name="description">`.
+- **Favicon:** `favicon.png` (8.7KB) — used on all pages. Root pages: `favicon.png`, tours/ pages: `../favicon.png`.
+- **Accessibility:** Skip links, ARIA labels, semantic HTML, lazy loading on all below-fold images.
 
 ## Requirements
 - Fully responsive (mobile, tablet, desktop)
