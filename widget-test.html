@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bokun Widget Test — Alpha Tours Rome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Bokun loader — loaded ONCE, shared by all widgets on this page -->
+  <script type="text/javascript" src="https://widgets.bokun.io/assets/javascripts/apps/build/BokunWidgetsLoader.js?bookingChannelUUID=a67640c9-6709-471a-a254-db5093d80d81" async></script>
+
+  <style>
+    :root {
+      --green:  #324e2c;
+      --red:    #a71b20;
+      --cream:  #fcefe6;
+      --orange: #f5b35d;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4ede5;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ── Banner ── */
+    .test-banner {
+      background: var(--red);
+      color: #fff;
+      text-align: center;
+      padding: 0.55rem 1rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Page header ── */
+    .page-header {
+      background: var(--green);
+      padding: 2.5rem 2rem 2.2rem;
+      text-align: center;
+      color: #fff;
+    }
+    .page-header img { height: 50px; margin-bottom: 1.2rem; display: block; margin-inline: auto; }
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.6rem);
+      margin-bottom: 0.4rem;
+    }
+    .page-header p {
+      font-size: 0.88rem;
+      opacity: 0.72;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Nav (jump links) ── */
+    .jump-nav {
+      background: #fff;
+      border-bottom: 1.5px solid #e4ddd6;
+      padding: 0.8rem 1.5rem;
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .jump-nav span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #888;
+      margin-right: 0.4rem;
+    }
+    .jump-nav a {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+      border: 1.5px solid var(--green);
+      color: var(--green);
+      transition: background 0.18s, color 0.18s;
+    }
+    .jump-nav a:hover { background: var(--green); color: #fff; }
+
+    /* ── Layout ── */
+    .content {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+
+    /* ── Widget card ── */
+    .widget-card {
+      background: #fff;
+      border-radius: 1.4rem;
+      border: 1.5px solid #e4ddd6;
+      box-shadow: 0 6px 32px rgba(50,78,44,0.08);
+      overflow: hidden;
+    }
+
+    .widget-card-header {
+      background: var(--cream);
+      border-bottom: 1.5px solid #e4ddd6;
+      padding: 1.4rem 2rem;
+    }
+    .widget-card-header-top {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.28rem 0.8rem;
+      border-radius: 2rem;
+    }
+    .badge-green  { background: var(--green);  color: #fff; }
+    .badge-red    { background: var(--red);    color: #fff; }
+    .badge-orange { background: var(--orange); color: #1a1a1a; }
+    .badge-gray   { background: #555;          color: #fff; }
+
+    .widget-card-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--green);
+    }
+    .widget-card-header .desc {
+      font-size: 0.84rem;
+      color: #666;
+      line-height: 1.6;
+      max-width: 680px;
+    }
+    .widget-card-header .verdict {
+      display: inline-block;
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--red);
+    }
+
+    .widget-body {
+      padding: 2rem;
+    }
+
+    /* ── Button widget centering ── */
+    .button-demo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 1.2rem;
+      padding: 3rem 2rem;
+      background: linear-gradient(135deg, #f0ebe4 0%, #e8ddd3 100%);
+      border-radius: 0.8rem;
+      text-align: center;
+    }
+    .button-demo p {
+      font-size: 0.82rem;
+      color: #888;
+      max-width: 340px;
+    }
+    .button-context {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--green);
+      padding: 1rem 1.8rem;
+      border-radius: 0.8rem;
+      color: #fff;
+      font-size: 0.88rem;
+    }
+    .button-context strong { font-family: 'Playfair Display', serif; font-size: 1.1rem; }
+
+    /* ── Notes grid ── */
+    .eval-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    .eval-item {
+      background: #faf7f3;
+      border: 1px solid #e8e0d8;
+      border-radius: 0.75rem;
+      padding: 0.85rem 1rem;
+      font-size: 0.82rem;
+      color: #444;
+      line-height: 1.5;
+    }
+    .eval-item strong {
+      display: block;
+      color: var(--green);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ── Summary panel ── */
+    .summary-panel {
+      background: linear-gradient(135deg, var(--green) 0%, #1e3019 100%);
+      color: #fff;
+      border-radius: 1.4rem;
+      padding: 2rem 2.2rem;
+    }
+    .summary-panel h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: var(--orange);
+    }
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    .summary-table th {
+      text-align: left;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      opacity: 0.65;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .summary-table td {
+      padding: 0.7rem 0.8rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      vertical-align: top;
+    }
+    .summary-table tr:last-child td { border-bottom: none; }
+    .tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 0.4rem; font-size: 0.72rem; font-weight: 700; }
+    .tag-yes   { background: rgba(100,200,80,0.25);  color: #9ef094; }
+    .tag-no    { background: rgba(220,60,60,0.25);   color: #f4a0a0; }
+    .tag-maybe { background: rgba(245,179,93,0.2);   color: var(--orange); }
+
+    /* ── Footer ── */
+    .test-footer {
+      text-align: center;
+      font-size: 0.78rem;
+      color: #aaa;
+      padding: 2rem;
+      border-top: 1px solid #eee;
+    }
+    .test-footer a { color: var(--green); }
+  </style>
+</head>
+<body>
+
+  <div class="test-banner">
+    Internal Widget Sandbox — Not linked in site navigation · alphatoursrome.com
+  </div>
+
+  <header class="page-header">
+    <img src="alpha-logo.svg" alt="Alpha Tours Rome" />
+    <h1>Bokun Widget Comparison</h1>
+    <p>All 4 widget types tested with the Golf Cart product. Evaluate each, then decide which goes where.</p>
+  </header>
+
+  <nav class="jump-nav">
+    <span>Jump to:</span>
+    <a href="#section-button">1 · Button</a>
+    <a href="#section-calendar">2 · Calendar</a>
+    <a href="#section-product-page">3 · Product Page</a>
+    <a href="#section-product-list">4 · Product List</a>
+    <a href="#section-layout-question">Layout Question</a>
+    <a href="#section-summary">Summary</a>
+  </nav>
+
+  <div class="content">
+
+    <!-- ════════════════════════════════════════
+         1. BUTTON WIDGET
+    ════════════════════════════════════════ -->
+    <div class="widget-card" id="section-button">
+      <div class="widget-card-header">
+        <div class="widget-card-header-top">
+          <span class="badge badge-green">1 · Button</span>
+          <h2>Book Now Button</h2>
+        </div>
+        <p class="desc">A single CTA button. On click it opens a Bokun booking modal overlay. Smallest footprint — designed to sit inside your existing page layout (service cards, hero, nav bar).</p>
+        <span class="verdict">Likely use: service cards on services.html and hero CTAs</span>
+      </div>
+      <div class="widget-body">
+
+        <!-- Simulated service card context -->
+        <p style="font-size:0.8rem;color:#888;margin-bottom:1rem;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Shown in context — as it would look on a service card:</p>
+        <div class="button-context">
+          <div>
+            <strong>Golf Cart Tours</strong>
+            <p style="font-size:0.82rem;opacity:0.75;margin-top:0.25rem;">Comfortable & Eco-Friendly · Up to 7 guests</p>
+          </div>
+          <!-- BUTTON WIDGET -->
+          <style>
+            #bokun_121dc4f2_7cde_4315_a35c_84ee63b34300 {
+              display: inline-block;
+              padding: 10px 20px;
+              background: #f5b35d;
+              border-radius: 5px;
+              box-shadow: none;
+              font-weight: 700;
+              font-size: 15px;
+              text-decoration: none;
+              text-align: center;
+              color: #1a1a1a;
+              border: none;
+              cursor: pointer;
+              transition: background .2s ease;
+              white-space: nowrap;
+            }
+            #bokun_121dc4f2_7cde_4315_a35c_84ee63b34300:hover { background: #e8a040; }
+            #bokun_121dc4f2_7cde_4315_a35c_84ee63b34300:active { background: #d49030; }
+          </style>
+          <button class="bokunButton"
+            id="bokun_121dc4f2_7cde_4315_a35c_84ee63b34300"
+            data-src="https://widgets.bokun.io/online-sales/a67640c9-6709-471a-a254-db5093d80d81/experience/439532?partialView=1"
+            data-testid="widget-book-button">
+            Book Now
+          </button>
+        </div>
+
+        <!-- Also shown standalone -->
+        <div class="button-demo" style="margin-top:1.2rem;">
+          <p>Also shown standalone (how it looks with Bokun's default styles):</p>
+          <style>
+            #bokun_default_btn {
+              display: inline-block; padding: 10px 20px; background: #408C3D;
+              border-radius: 5px; font-weight: 600; font-size: 16px;
+              text-decoration: none; text-align: center; color: #FFFFFF;
+              border: none; cursor: pointer; transition: background .2s ease;
+            }
+            #bokun_default_btn:hover { background: #285726; }
+          </style>
+          <button class="bokunButton"
+            id="bokun_default_btn"
+            data-src="https://widgets.bokun.io/online-sales/a67640c9-6709-471a-a254-db5093d80d81/experience/439532?partialView=1">
+            Book now (Bokun default style)
+          </button>
+          <p>Note: button styles are fully overridable with CSS — the orange version above uses our brand colour.</p>
+        </div>
+
+        <div class="eval-grid">
+          <div class="eval-item"><strong>Check</strong>Does clicking open a modal overlay?</div>
+          <div class="eval-item"><strong>Check</strong>Does the modal show Golf Cart details + calendar?</div>
+          <div class="eval-item"><strong>Check</strong>Does it look right on mobile? (resize to 375px)</div>
+          <div class="eval-item"><strong>Check</strong>Can you complete a booking end-to-end?</div>
+          <div class="eval-item"><strong>Note</strong>Button CSS is fully overridable — we can match any brand style.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         2. BOOKING CALENDAR WIDGET
+    ════════════════════════════════════════ -->
+    <div class="widget-card" id="section-calendar">
+      <div class="widget-card-header">
+        <div class="widget-card-header-top">
+          <span class="badge badge-orange">2 · Calendar</span>
+          <h2>Booking Calendar</h2>
+        </div>
+        <p class="desc">Just the calendar + availability + booking form. No product description or photos — assumes your page already sells the product. Embeds inline (no modal). This is likely the best fit for the contact.html booking hub.</p>
+        <span class="verdict">Likely use: contact.html booking hub, one per tab</span>
+      </div>
+      <div class="widget-body">
+        <div class="bokunWidget" data-src="https://widgets.bokun.io/online-sales/a67640c9-6709-471a-a254-db5093d80d81/experience-calendar/439532"></div>
+        <noscript>Please enable javascript in your browser to book</noscript>
+
+        <div class="eval-grid">
+          <div class="eval-item"><strong>Check</strong>Does it show availability dates immediately?</div>
+          <div class="eval-item"><strong>Check</strong>Does it complete the full checkout inline (no redirect)?</div>
+          <div class="eval-item"><strong>Check</strong>How does it look on mobile — scrollable or broken?</div>
+          <div class="eval-item"><strong>Check</strong>Height — does it need a fixed container or self-sizes?</div>
+          <div class="eval-item"><strong>Check</strong>Styling — does it feel too "generic Bokun" or acceptable?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         3. PRODUCT PAGE WIDGET
+    ════════════════════════════════════════ -->
+    <div class="widget-card" id="section-product-page">
+      <div class="widget-card-header">
+        <div class="widget-card-header-top">
+          <span class="badge badge-red">3 · Product Page</span>
+          <h2>Full Product Page</h2>
+        </div>
+        <p class="desc">Complete widget: Bokun photos, description text, itinerary, pricing, and the calendar — all from your Bokun product data. Useful if you want Bokun to manage content. Risk: generic layout may clash with brand.</p>
+        <span class="verdict">Possible use: standalone booking landing pages — evaluate carefully</span>
+      </div>
+      <div class="widget-body">
+        <div class="bokunWidget" data-src="https://widgets.bokun.io/online-sales/a67640c9-6709-471a-a254-db5093d80d81/experience/439532"></div>
+        <noscript>Please enable javascript in your browser to book</noscript>
+
+        <div class="eval-grid">
+          <div class="eval-item"><strong>Check</strong>What photos/text does Bokun pull? Are they up to date?</div>
+          <div class="eval-item"><strong>Check</strong>Does the design clash with our green/cream brand?</div>
+          <div class="eval-item"><strong>Check</strong>Is the page height manageable or extremely long?</div>
+          <div class="eval-item"><strong>Check</strong>Is there duplicate content vs what's already on services.html?</div>
+          <div class="eval-item"><strong>Note</strong>This is likely overkill given our existing site — may skip it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         4. PRODUCT LIST WIDGET
+    ════════════════════════════════════════ -->
+    <div class="widget-card" id="section-product-list">
+      <div class="widget-card-header">
+        <div class="widget-card-header-top">
+          <span class="badge badge-gray">4 · Product List</span>
+          <h2>Product List</h2>
+        </div>
+        <p class="desc">Shows all your Bokun products in a browseable list with photos and booking links. Good as a "one-stop shop" panel. May replace individual tabs if the layout is clean enough.</p>
+        <span class="verdict">Possible use: contact.html as a single all-products booking section</span>
+      </div>
+      <div class="widget-body">
+        <div class="bokunWidget" data-src="https://widgets.bokun.io/online-sales/a67640c9-6709-471a-a254-db5093d80d81/product-list/95838"></div>
+        <noscript>Please enable javascript in your browser to book</noscript>
+
+        <div class="eval-grid">
+          <div class="eval-item"><strong>Check</strong>Does it list all 6 of your products?</div>
+          <div class="eval-item"><strong>Check</strong>Are product names and photos up to date in Bokun?</div>
+          <div class="eval-item"><strong>Check</strong>Does clicking a product go to a calendar / booking flow?</div>
+          <div class="eval-item"><strong>Check</strong>Mobile: does the grid stack cleanly on 375px?</div>
+          <div class="eval-item"><strong>Check</strong>Could this replace tabs on contact.html or is it too long?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         LAYOUT QUESTION: TABS vs STACKED vs SEPARATE PAGES
+    ════════════════════════════════════════ -->
+    <div class="widget-card" id="section-layout-question">
+      <div class="widget-card-header">
+        <div class="widget-card-header-top">
+          <span class="badge badge-orange">Layout Question</span>
+          <h2>How to show multiple experiences per category?</h2>
+        </div>
+        <p class="desc">Golf Cart has 7 experiences. Vespa has 2. Food Tours has 3. Each category page needs a way to present them. Three options are shown below — pick the one that feels right.</p>
+      </div>
+      <div class="widget-body">
+
+        <!-- OPTION A: Tabs -->
+        <div style="margin-bottom:2.5rem;">
+          <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+            <span class="badge badge-green">Option A</span>
+            <strong style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green)">Tab Selector</strong>
+          </div>
+          <p style="font-size:0.84rem;color:#666;margin-bottom:1rem;">One page for Golf Cart. Tabs across the top — click a tour name to load its Bokun widget below. Only one widget loads at a time.</p>
+          <div style="background:#f4ede5;border-radius:1rem;padding:1.5rem;border:1.5px solid #e4ddd6;">
+            <!-- Fake tab UI -->
+            <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.2rem;" id="demo-tabs">
+              <button onclick="selectTab(0)" class="demo-tab active-tab" style="padding:0.5rem 1rem;border:2px solid var(--green);border-radius:2rem;background:var(--green);color:#fff;font-size:0.8rem;font-weight:600;cursor:pointer;">Rome Highlights</button>
+              <button onclick="selectTab(1)" class="demo-tab" style="padding:0.5rem 1rem;border:2px solid var(--green);border-radius:2rem;background:transparent;color:var(--green);font-size:0.8rem;font-weight:600;cursor:pointer;">Top Ten Landmarks</button>
+              <button onclick="selectTab(2)" class="demo-tab" style="padding:0.5rem 1rem;border:2px solid var(--green);border-radius:2rem;background:transparent;color:var(--green);font-size:0.8rem;font-weight:600;cursor:pointer;">Catacomb & Appian Way</button>
+              <button onclick="selectTab(3)" class="demo-tab" style="padding:0.5rem 1rem;border:2px solid var(--green);border-radius:2rem;background:transparent;color:var(--green);font-size:0.8rem;font-weight:600;cursor:pointer;">+ 4 more…</button>
+            </div>
+            <div style="background:#fff;border-radius:0.75rem;border:1.5px solid var(--green);padding:1.2rem;min-height:80px;display:flex;align-items:center;justify-content:center;">
+              <p id="demo-tab-label" style="font-size:0.88rem;color:#888;font-style:italic;">← Bokun Product Page widget for "Rome Highlights" loads here</p>
+            </div>
+          </div>
+          <div style="margin-top:0.75rem;background:#fff8f0;border:1px solid var(--orange);border-radius:0.6rem;padding:0.75rem 1rem;font-size:0.8rem;color:#666;">
+            <strong style="color:var(--red);">Pro:</strong> One clean URL per category (golf-cart.html). Easy to link to. &nbsp;
+            <strong style="color:var(--red);">Con:</strong> 7 tabs is crowded on mobile. User must read tab names to find what they want.
+          </div>
+        </div>
+
+        <!-- OPTION B: Stacked -->
+        <div style="margin-bottom:2.5rem;">
+          <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+            <span class="badge badge-red">Option B</span>
+            <strong style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green)">Stacked on One Page</strong>
+          </div>
+          <p style="font-size:0.84rem;color:#666;margin-bottom:1rem;">One page for Golf Cart. All 7 Bokun Product Page widgets stacked vertically — scroll down to see each one.</p>
+          <div style="background:#f4ede5;border-radius:1rem;padding:1.5rem;border:1.5px solid #e4ddd6;display:flex;flex-direction:column;gap:0.75rem;">
+            <div style="background:#fff;border-radius:0.6rem;border:1.5px solid var(--green);padding:1rem;font-size:0.82rem;color:#888;font-style:italic;">Bokun Product Page — Rome Highlights (full widget: photos, description, calendar)</div>
+            <div style="background:#fff;border-radius:0.6rem;border:1px solid #ddd;padding:1rem;font-size:0.82rem;color:#aaa;font-style:italic;">Bokun Product Page — Top Ten Landmarks</div>
+            <div style="background:#fff;border-radius:0.6rem;border:1px solid #ddd;padding:1rem;font-size:0.82rem;color:#aaa;font-style:italic;">Bokun Product Page — Catacomb & Appian Way</div>
+            <div style="background:#fff;border-radius:0.6rem;border:1px solid #ddd;padding:0.75rem 1rem;font-size:0.8rem;color:#bbb;text-align:center;">+ 4 more widgets below…</div>
+          </div>
+          <div style="margin-top:0.75rem;background:#fff8f0;border:1px solid var(--orange);border-radius:0.6rem;padding:0.75rem 1rem;font-size:0.8rem;color:#666;">
+            <strong style="color:var(--red);">Pro:</strong> Everything visible at once, no clicking. &nbsp;
+            <strong style="color:var(--red);">Con:</strong> Very long page. 7 widgets all loading = slow. Hard to navigate.
+          </div>
+        </div>
+
+        <!-- OPTION C: Separate Pages -->
+        <div>
+          <div style="display:flex;align-items:center;gap:0.8rem;margin-bottom:1rem;">
+            <span class="badge badge-gray">Option C</span>
+            <strong style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green)">Separate Page per Experience</strong>
+          </div>
+          <p style="font-size:0.84rem;color:#666;margin-bottom:1rem;">Each of the 18 experiences gets its own dedicated page. Category page (golf-cart.html) becomes a card grid linking to each sub-page. One Bokun widget per page = fastest loading.</p>
+          <div style="background:#f4ede5;border-radius:1rem;padding:1.5rem;border:1.5px solid #e4ddd6;">
+            <!-- Category page mockup -->
+            <p style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#888;margin-bottom:0.8rem;">golf-cart.html (category page):</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;margin-bottom:1.2rem;">
+              <div style="background:#fff;border-radius:0.75rem;border:1.5px solid var(--green);padding:1rem;">
+                <div style="height:60px;background:linear-gradient(135deg,var(--green),#1e3019);border-radius:0.4rem;margin-bottom:0.6rem;"></div>
+                <p style="font-size:0.8rem;font-weight:600;color:var(--green);margin-bottom:0.4rem;">Rome Highlights</p>
+                <p style="font-size:0.72rem;color:#888;margin-bottom:0.6rem;">Private · 2h · from €X</p>
+                <a href="#" style="font-size:0.75rem;font-weight:700;color:var(--red);text-decoration:none;">View & Book →</a>
+              </div>
+              <div style="background:#fff;border-radius:0.75rem;border:1px solid #ddd;padding:1rem;">
+                <div style="height:60px;background:#eee;border-radius:0.4rem;margin-bottom:0.6rem;"></div>
+                <p style="font-size:0.8rem;font-weight:600;color:#555;margin-bottom:0.4rem;">Top Ten Landmarks</p>
+                <p style="font-size:0.72rem;color:#aaa;margin-bottom:0.6rem;">Group · 3h · from €X</p>
+                <a href="#" style="font-size:0.75rem;font-weight:700;color:#aaa;text-decoration:none;">View & Book →</a>
+              </div>
+              <div style="background:#fff;border-radius:0.75rem;border:1px solid #ddd;padding:1rem;">
+                <div style="height:60px;background:#eee;border-radius:0.4rem;margin-bottom:0.6rem;"></div>
+                <p style="font-size:0.8rem;font-weight:600;color:#555;margin-bottom:0.4rem;">Catacomb & Appian Way</p>
+                <p style="font-size:0.72rem;color:#aaa;margin-bottom:0.6rem;">Private · 2.5h</p>
+                <a href="#" style="font-size:0.75rem;font-weight:700;color:#aaa;text-decoration:none;">View & Book →</a>
+              </div>
+            </div>
+            <!-- Sub-page mockup -->
+            <p style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.05em;color:#888;margin-bottom:0.8rem;">golf-cart-rome-highlights.html (individual experience page):</p>
+            <div style="background:#fff;border-radius:0.75rem;border:1.5px solid var(--green);padding:1.2rem;">
+              <div style="height:80px;background:linear-gradient(135deg,var(--green),#1e3019);border-radius:0.4rem;margin-bottom:0.8rem;display:flex;align-items:center;padding:0 1rem;"><span style="color:#fff;font-family:'Playfair Display',serif;font-size:1rem;">Rome Highlights Private Tour by Golf Cart</span></div>
+              <div style="background:#f4ede5;border-radius:0.4rem;padding:0.8rem;font-size:0.8rem;color:#888;font-style:italic;text-align:center;">← Full Bokun Product Page widget here (photos + description + calendar)</div>
+            </div>
+          </div>
+          <div style="margin-top:0.75rem;background:#e8f5e9;border:1px solid #a5d6a7;border-radius:0.6rem;padding:0.75rem 1rem;font-size:0.8rem;color:#2e7d32;">
+            <strong>Recommended.</strong> Best performance (1 widget per page), best SEO (18 indexable URLs), cleanest UX. This is what "2 — better separated pages" means in practice. Results in 18 individual pages + 6 category pages.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      const tabLabels = ['Rome Highlights', 'Top Ten Landmarks', 'Catacomb & Appian Way', 'Private Tour'];
+      function selectTab(i) {
+        document.querySelectorAll('.demo-tab').forEach((t,j) => {
+          t.style.background = j===i ? 'var(--green)' : 'transparent';
+          t.style.color = j===i ? '#fff' : 'var(--green)';
+        });
+        document.getElementById('demo-tab-label').textContent = '← Bokun Product Page widget for "' + tabLabels[Math.min(i,tabLabels.length-1)] + '" loads here';
+      }
+    </script>
+
+    <!-- ════════════════════════════════════════
+         DECISION SUMMARY
+    ════════════════════════════════════════ -->
+    <div class="summary-panel" id="section-summary">
+      <h3>Preliminary Recommendation</h3>
+      <table class="summary-table">
+        <thead>
+          <tr>
+            <th>Widget</th>
+            <th>Best for</th>
+            <th>Use it?</th>
+            <th>Your verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Button</strong></td>
+            <td>Service cards, hero, nav CTAs</td>
+            <td><span class="tag tag-yes">Yes</span></td>
+            <td style="opacity:0.4;font-style:italic;">fill in after testing</td>
+          </tr>
+          <tr>
+            <td><strong>Calendar</strong></td>
+            <td>contact.html booking hub (per tab)</td>
+            <td><span class="tag tag-yes">Yes</span></td>
+            <td style="opacity:0.4;font-style:italic;">fill in after testing</td>
+          </tr>
+          <tr>
+            <td><strong>Product Page</strong></td>
+            <td>Standalone landing pages</td>
+            <td><span class="tag tag-maybe">Maybe</span></td>
+            <td style="opacity:0.4;font-style:italic;">fill in after testing</td>
+          </tr>
+          <tr>
+            <td><strong>Product List</strong></td>
+            <td>Contact page single-panel alt</td>
+            <td><span class="tag tag-maybe">Maybe</span></td>
+            <td style="opacity:0.4;font-style:italic;">fill in after testing</td>
+          </tr>
+          <tr>
+            <td><strong>Gift Card</strong></td>
+            <td>Seasonal upsell (Christmas, Valentine)</td>
+            <td><span class="tag tag-no">Later</span></td>
+            <td style="opacity:0.4;font-style:italic;">Phase 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <footer class="test-footer">
+    Alpha Tours Rome — Internal sandbox · Not indexed ·
+    <a href="index.html">← Back to site</a>
+  </footer>
+
+</body>
+</html>

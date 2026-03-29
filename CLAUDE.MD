@@ -47,9 +47,46 @@ Branding/
       brochure-tours.jpeg           ← golf cart, vespa, fiat 500 brochure
       logo-colosseum.jpeg           ← Colosseum illustration logo
     guidelines/     ← colour-palette.md
+    Images/
+      Untitled (740 x 416 px) (2)/  ← service card images (740×416, 16:9)
+        card-golf-cart-tours.jpg        ← Golf Cart Tours card
+        card-vespa-sidecar-tours.jpg    ← Vespa Sidecar card
+        card-fiat500-vintage-tour.jpg   ← FIAT 500 Vintage Tour card
+        card-food-tours-rome.jpg        ← Food Tours card
+        card-private-day-trips.jpg      ← Private Day Trips card
+        card-airport-van-transfers.jpg  ← Airport & Hotel Transfers card
+      golf-cart-roman-temple-tour-group.jpg  ← golf cart at temple columns with group
+      golf-cart-guide-rome-street.jpg        ← guide with golf cart in Rome street
+      golf-cart-romes-highlights-private.jpg ← (if exists)
+      guests-laughing-pantheon-rome.jpg      ← guests at Pantheon fountain
+      guests-inside-golf-cart-rome.jpg       ← guests chatting inside golf cart
+      guests-pointing-colosseum-tour.jpg     ← excited guests pointing at Colosseum
+      vespa-sidecar-green-colosseum.jpg      ← green Vespa sidecar at Colosseum
+      vespa-sidecar-green-trevi-fountain.jpg ← green Vespa sidecar at Trevi Fountain
+      fiat500-orange-girls-colosseum.jpg     ← orange Fiat 500, girls at Colosseum
+      fiat500-colosseum-two-men.jpg          ← Fiat 500 at Colosseum, two men
+      fiat500-orange-church-dusk.jpg         ← orange Fiat 500 at church, dusk
+      fiat500-orange-church-piazza-sunny.jpg ← orange Fiat 500 at church piazza, sunny
+      wine-cheese-food-tour-rome.jpg         ← wine and charcuterie table
+      food-tour-woman-eating-suppli.jpg      ← woman eating supplì on food tour
+      van-transfer-colosseum-rome.webp       ← black Mercedes van at Colosseum
 ```
 - Site photos: `hero.jpg` (hero/tours banner), `about.jpg` (food/services banner) — both in project root
+- Service card images: `Branding/brand_assets/Images/Untitled (740 x 416 px) (2)/` — all cropped to 740×416px (16:9)
 - Always check `Branding/brand_assets/` before using placeholders
+
+## TripAdvisor Assets
+```
+Tripadvisor/
+  tchotel_2025_L.png  ← Travelers' Choice 2025
+  tchotel_2024_L.png  ← Travelers' Choice 2024
+  tchotel_2023_L.png  ← Travelers' Choice 2023
+  2019_en-bk.png      ← Certificate of Excellence 2019 (black)
+  2018_en-bk.png      ← Certificate of Excellence 2018 (black)
+  2017_en-bk.png      ← Certificate of Excellence 2017 (black)
+```
+- All 6 badges displayed in the header's top strip across all pages
+- Root pages use `Tripadvisor/`, pages in `tours/` use `../Tripadvisor/`
 
 ## Services (from brochures — use these exact descriptions)
 - **Golf Cart Tours** — Shared & Private. Comfortable & Eco-Friendly. See All Top Landmarks. Flexible & Fun for Everyone. Up to 7 guests.
@@ -64,14 +101,47 @@ Branding/
 - Contact: +39 375 829 7864, @alphatoursrome, alphatoursrome.com
 - FAQ: golf cart capacity (7), cancellation policy, etc.
 
+## Bokun Booking Integration
+- Alpha Tours has an **existing Bokun seller account** (currently live on rome-tourguide.com)
+- Integration method: **Bokun Booking Widgets** (embeddable iframes/JS from the Bokun dashboard) — NOT the Channel Manager API
+- Full implementation plan: `BOKUN-INTEGRATION.md` in the project root
+- **Status:** Phase 1 (collecting widget codes) — user must retrieve embed codes from [bokun.io](https://bokun.io) dashboard first
+- Booking hub page: `contact.html` — will host all 6 service widgets behind a tab selector
+- Anchor convention: `contact.html#book-[slug]` where slugs are: `golf-cart`, `vespa`, `fiat500`, `food-tour`, `transfers`, `day-trips`
+- All "Book Now" buttons site-wide must point to `contact.html#book` (or a specific `#book-[slug]`)
+- Widget CSS wrapper class: `.bokun-widget-wrap` (brand-styled, green border, cream bg)
+- **Do not implement any Bokun code until the user provides the widget embed codes**
+
 ## Site Structure (multi-page, already built)
-- `index.html` — Home
+- `index.html` — Home (product showcase, contact strip, services grid, FAQ)
 - `about.html` — About
 - `services.html` — Services & pricing
 - `contact.html` — Booking form
 - `blog.html` — Travel tips & stories
+- `golf-cart.html`, `vespa.html`, `fiat500.html`, `food-tours.html`, `transfers.html`, `day-trips.html` — 6 category pages
+- `tours/*.html` — 18 individual experience pages
 - `styles.css` — All brand CSS (custom properties, grid, animations)
 - `script.js` — Nav toggle, IntersectionObserver, FAQ accordion, smooth scroll
+
+## Header Structure (3-row white header, applied to all 29 HTML files)
+- **Row 1 — TripAdvisor strip**: 6 award badges centered on white background
+- **Row 2 — Social strip**: "Follow us" + Instagram/Facebook/WhatsApp icons left, WhatsApp phone number right
+- **Row 3 — Navigation**: Full-width nav bar, ALL CAPS links with `|` dividers, green "BOOK NOW" block at far right
+- Header is always white (no transparent/scrolled-dark state)
+- `--header-height: 175px` (desktop), `145px` (mobile ≤768px)
+- No logo in header — logo removed by user request
+- To update the header across all pages: write a Node.js script similar to `update-header.mjs` (deleted after use) that replaces from `<a href="#main-content" class="skip-link">` to `</header>` in every HTML file
+- **Path prefix**: root files use `Tripadvisor/` and `index.html`; `tours/` files use `../Tripadvisor/` and `../index.html`
+
+## Homepage Sections (in order)
+1. Hero (full-width, photo bg, chips linking to category pages)
+2. Product Showcase (`#book-now`) — 4 category sections with Bokun Button cards
+3. Contact Strip (`#contact-strip`) — green section, 4 contact cards
+4. Services Grid — 6 service cards linking to category pages
+5. Fiat 500 scroll-driven video
+6. FAQ accordion
+7. Newsletter form
+8. Footer
 
 ## Deployment
 - **GitHub repo:** https://github.com/pierpoljak024-creator/alpha-tours-rome
@@ -173,12 +243,25 @@ Also include a `robots.txt` and `sitemap.xml` in the root for SEO.
 - If the server is already running, do not start a second instance.
 
 ## Screenshot Workflow
-- Puppeteer is installed at `C:/Users/nateh/AppData/Local/Temp/puppeteer-test/`. Chrome cache is at `C:/Users/nateh/.cache/puppeteer/`.
-- **Always screenshot from localhost:** `node screenshot.mjs http://localhost:3000`
-- Screenshots are saved automatically to `./temporary screenshots/screenshot-N.png` (auto-incremented, never overwritten).
-- Optional label suffix: `node screenshot.mjs http://localhost:3000 label` → saves as `screenshot-N-label.png`
-- `screenshot.mjs` lives in the project root. Use it as-is.
-- After screenshotting, read the PNG from `temporary screenshots/` with the Read tool.
+- Puppeteer module: `C:/Users/pierf/node_modules/puppeteer`
+- Chrome executable: `C:/Users/pierf/.cache/puppeteer/chrome/win64-146.0.7680.153/chrome-win64/chrome.exe`
+- **Always screenshot from localhost** — never from `file:///`
+- Use inline node script (no `screenshot.mjs`):
+  ```js
+  node -e "
+  const puppeteer = require('C:/Users/pierf/node_modules/puppeteer');
+  (async () => {
+    const browser = await puppeteer.launch({ executablePath: 'C:/Users/pierf/.cache/puppeteer/chrome/win64-146.0.7680.153/chrome-win64/chrome.exe', headless: true });
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1400, height: 900 });
+    await page.goto('http://localhost:3000', { waitUntil: 'networkidle2' });
+    await page.screenshot({ path: 'temporary screenshots/screenshot.png' });
+    await browser.close();
+  })();
+  "
+  ```
+- Output folder: `temporary screenshots/` (git-ignored)
+- After screenshotting, read the PNG with the Read tool
 - When comparing, be specific: "heading is 32px but reference shows ~24px", "card gap is 16px but should be 24px"
 - Check: spacing/padding, font size/weight/line-height, colors (exact hex), alignment, border-radius, shadows, image sizing
 
