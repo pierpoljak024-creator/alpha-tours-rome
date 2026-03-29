@@ -32,10 +32,30 @@ document.addEventListener('click', e => {
   }
 });
 
-/* ── Sticky Header Shadow ── */
+/* ── Header: hide on scroll down, reveal on scroll up ── */
 const header = document.querySelector('.site-header');
+let lastScrollY = window.scrollY;
+let scrollTicking = false;
+
 window.addEventListener('scroll', () => {
-  header?.classList.toggle('scrolled', window.scrollY > 80);
+  if (scrollTicking) return;
+  scrollTicking = true;
+  window.requestAnimationFrame(() => {
+    const currentScrollY = window.scrollY;
+    const isMenuOpen = navToggle?.getAttribute('aria-expanded') === 'true';
+
+    if (!isMenuOpen) {
+      if (currentScrollY > lastScrollY && currentScrollY > 180) {
+        header?.classList.add('header-hidden');
+      } else {
+        header?.classList.remove('header-hidden');
+      }
+    }
+
+    header?.classList.toggle('scrolled', currentScrollY > 80);
+    lastScrollY = currentScrollY;
+    scrollTicking = false;
+  });
 }, { passive: true });
 
 /* ── Active Nav Link Highlighting ── */
