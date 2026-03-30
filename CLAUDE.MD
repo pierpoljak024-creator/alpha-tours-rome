@@ -108,6 +108,23 @@ Tripadvisor/
 - Contact: +39 375 829 7864, @alphatoursrome, alphatoursrome.com
 - FAQ: golf cart capacity (7), cancellation policy, etc.
 
+## Contact Form
+- **Status: LIVE** — Netlify Forms handling all submissions
+- Form is in `contact.html` — fields: name, email, phone, tour, date, guests, message
+- Submissions stored in Netlify dashboard: app.netlify.com → Sites → alphatoursrome → Forms → contact
+- Email notifications configured to: `Waleedzsc@gmail.com` and `Mahyinarahmed@gmail.com`
+- Honeypot spam protection enabled (`data-netlify-honeypot="bot-field"`)
+- JS in `script.js` does a real `fetch()` POST to Netlify — no fake simulation
+
+## WhatsApp Floating Button
+- **Status: LIVE** — present on all 30 HTML pages (root + tours/)
+- CSS in `styles.css` under `/* ── WhatsApp Floating Button ── */`
+- HTML injected before `</body>` on every page — class `.whatsapp-float`
+- Links to `https://wa.me/393758297864` with pre-filled message
+- Desktop: green pill with "Chat with us!" label, bottom-right corner
+- Mobile (<480px): collapses to icon-only circle
+- Pulse ring animation draws attention without being intrusive
+
 ## Bokun Booking Integration
 - Alpha Tours has an **existing Bokun seller account** (currently live on rome-tourguide.com)
 - Integration method: **Bokun Booking Widgets** (embeddable iframes/JS from the Bokun dashboard) — NOT the Channel Manager API
