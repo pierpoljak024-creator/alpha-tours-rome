@@ -3,3 +3,15 @@ temporary screenshots/
 package-lock.json
 *.DS_Store
 Thumbs.db
+
+# Raw camera originals (use compressed versions instead)
+Branding/brand_assets/Images/_DSC*.jpg
+Branding/brand_assets/Images/IMG_*.JPG
+Branding/brand_assets/Images/DSCF*.JPG
+Branding/brand_assets/Videos/
+
+# Dev artifacts
+tmp-img-*.png
+view-logo.mjs
+*.mjs.bak
+.claude/
