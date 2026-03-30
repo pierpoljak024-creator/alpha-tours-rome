@@ -45,7 +45,7 @@ window.addEventListener('scroll', () => {
     const isMenuOpen = navToggle?.getAttribute('aria-expanded') === 'true';
 
     if (!isMenuOpen) {
-      if (currentScrollY > lastScrollY && currentScrollY > 180) {
+      if (currentScrollY > lastScrollY && currentScrollY > 60) {
         header?.classList.add('header-hidden');
       } else {
         header?.classList.remove('header-hidden');
@@ -124,19 +124,25 @@ contactForm?.addEventListener('submit', e => {
   submitBtn.disabled = true;
   submitBtn.textContent = 'Sending…';
 
-  // Simulate submission — replace with real fetch() to your endpoint
-  setTimeout(() => {
-    contactForm.style.display = 'none';
-    if (formSuccess) {
-      formSuccess.style.display = 'block';
-      formSuccess.innerHTML = `
-        <div style="font-size:2.5rem;margin-bottom:1rem;">✓</div>
-        <strong>Message sent!</strong><br>
-        <span style="font-weight:400;font-size:0.95rem;opacity:0.85">
-          We'll get back to you within 24 hours.
-        </span>`;
-    }
-  }, 900);
+  const data = new FormData(contactForm);
+  fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(data).toString() })
+    .then(() => {
+      contactForm.style.display = 'none';
+      if (formSuccess) {
+        formSuccess.style.display = 'block';
+        formSuccess.innerHTML = `
+          <div style="font-size:2.5rem;margin-bottom:1rem;">✓</div>
+          <strong>Message sent!</strong><br>
+          <span style="font-weight:400;font-size:0.95rem;opacity:0.85">
+            We'll get back to you within 24 hours.
+          </span>`;
+      }
+    })
+    .catch(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Booking Enquiry';
+      alert('Something went wrong. Please try WhatsApp or email us directly.');
+    });
 });
 
 /* ── Newsletter Form ── */

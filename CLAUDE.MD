@@ -33,9 +33,10 @@
 ## Logo
 - **`alpha-logo.svg`** (root, 1.2MB) — full-colour logo with white background, embedded JPEG inside SVG (Canva AI export). Used ONLY in the footer with `loading="lazy"`. Do NOT use as favicon — it is too large.
 - **`alpha-logo.png`** (root, 69KB) — web-optimised PNG extracted from the SVG, 200×200px, white background. Use for any light-background contexts.
+- **`logo-ufficiale-header.png`** (root, 52KB, 300×200px) — full-colour official logo extracted from `Branding/brand_assets/logos/logo ufficiale.svg` and processed with FFmpeg (`colorkey` to remove black BG, white fill, scale=300). Shows Italian flag, sun, Colosseum illustration. Used in the header TA strip at `height: 62px`.
 - **`favicon.png`** (root, 8.7KB) — 64×64px favicon used via `<link rel="icon" href="favicon.png">` on all root pages, `<link rel="icon" href="../favicon.png">` on pages in `tours/`.
 - All SVGs in `Branding/` are also 1.2MB Canva JPEG-in-SVG exports — same issue. Do not use them directly in HTML.
-- **Logo is NOT shown in the header** (removed by user request). Footer only.
+- **Logo shown in header TA strip** (left of TripAdvisor badges, separated by a divider). Hidden on mobile (`display:none`). Footer also shows logo.
 
 ## Brand Assets
 ```
@@ -71,6 +72,11 @@ Branding/
       wine-cheese-food-tour-rome.jpg         ← wine and charcuterie table
       food-tour-woman-eating-suppli.jpg      ← woman eating supplì on food tour
       van-transfer-colosseum-rome.webp       ← black Mercedes van at Colosseum
+      catacomb-appian-way-rome.jpg           ← Appian Way/catacomb photo (228KB, from _DSC0090, 1400px wide) — card image for Ancient Catacomb & Appian Way
+      food-tour-testaccio-rome.jpg           ← Testaccio food tour photo (87KB, from IMG_2169, 1400px wide) — card image for Walking Food Tour — Testaccio
+      food-tour-walking-tastings-rome.jpg    ← Food tour with tastings photo (129KB, from DSCF3613, 1400px wide) — card image for Walking Food Tour with Tastings
+      10f5bb64-7883-4128-9496-d5238dfb9568.webp ← Gladiators/Colosseum arena photo (77KB) — card image for Gladiators — Colosseum Arena Floor
+      4beafc2b-c554-46f7-b917-08f5be7fb4cc.webp ← VIP van tour photo (72KB) — card image for Discover Rome by Van — VIP
 ```
 - Site photos: `hero.jpg` (hero/tours banner), `about.jpg` (food/services banner) — both in project root
 - Service card images: `Branding/brand_assets/Images/Untitled (740 x 416 px) (2)/` — all cropped to 740×416px (16:9)
@@ -125,14 +131,15 @@ Tripadvisor/
 - `script.js` — Nav toggle, IntersectionObserver, FAQ accordion, smooth scroll
 
 ## Header Structure (3-row white header, applied to all 29 HTML files)
-- **Row 1 — TripAdvisor strip**: 6 award badges centered on white background
+- **Row 1 — TripAdvisor strip**: Logo (`logo-ufficiale-header.png`) on left with divider, then 6 award badges in chronological order (2017→2025). Logo hidden on mobile.
 - **Row 2 — Social strip**: "Follow us" + Instagram/Facebook/WhatsApp icons left, WhatsApp phone number right
 - **Row 3 — Navigation**: Full-width nav bar, ALL CAPS links with `|` dividers, green "BOOK NOW" block at far right
-- Header is always white (no transparent/scrolled-dark state)
+- **Desktop**: `position: relative` — header scrolls away naturally with the page (NOT sticky/fixed)
+- **Mobile**: `position: fixed; top: 0` — sticky, hides on scroll down (after 60px), reveals on scroll up
 - `--header-height: 175px` (desktop), `145px` (mobile ≤768px)
-- No logo in header — logo removed by user request
+- Badge and logo height: `62px` desktop, `46px` mobile
 - To update the header across all pages: write a Node.js script similar to `update-header.mjs` (deleted after use) that replaces from `<a href="#main-content" class="skip-link">` to `</header>` in every HTML file
-- **Path prefix**: root files use `Tripadvisor/` and `index.html`; `tours/` files use `../Tripadvisor/` and `../index.html`
+- **Path prefix**: root files use `Tripadvisor/` and `logo-ufficiale-header.png`; `tours/` files use `../Tripadvisor/` and `../logo-ufficiale-header.png`
 
 ## Homepage Sections (in order)
 1. Hero (full-width, photo bg, chips linking to category pages)
@@ -204,12 +211,12 @@ Also include a `robots.txt` and `sitemap.xml` in the root for SEO.
 
 ### Image compression rules
 - All images added to `Branding/brand_assets/Images/` MUST be compressed before use.
-- DSC/camera photos are typically 19–28MB raw — **always compress with FFmpeg first**:
+- DSC/camera photos are typically 4–28MB raw — **always compress with FFmpeg first**:
   ```
-  ffmpeg -i INPUT.jpg -vf "scale=900:-2" -q:v 4 OUTPUT.jpg -y
+  ffmpeg -i INPUT.jpg -vf "scale=1400:-2" -q:v 4 OUTPUT.jpg -y
   ```
-- Target: 100–300KB per image for web use.
-- Never commit raw camera photos to the repo.
+- Target: 100–300KB per image for web use. Use `scale=1400:-2` for card/hero images (wider = better quality on large screens).
+- Never commit raw camera photos to the repo (e.g. `_DSC*.jpg`, `IMG_*.JPG`, `DSCF*.JPG`).
 - `alpha-logo.svg` is a known 1.2MB file — do not use as `<img>` in performance-sensitive contexts. Use `alpha-logo.png` (69KB) for light backgrounds.
 
 ### Caching
