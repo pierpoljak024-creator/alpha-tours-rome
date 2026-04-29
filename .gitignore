@@ -1,17 +1,36 @@
 node_modules/
-temporary screenshots/
 package-lock.json
+
+# Review agent — credentials and runtime data (local only)
+tools/review-config.json
+tools/seen-reviews.json
+tools/new-reviews.json
+tools/pending-drafts.json
 *.DS_Store
 Thumbs.db
 
+# Design source files (not for deployment)
+design/
+
+# Project documentation (not for deployment)
+docs/
+
 # Raw camera originals (use compressed versions instead)
-Branding/brand_assets/Images/_DSC*.jpg
-Branding/brand_assets/Images/IMG_*.JPG
-Branding/brand_assets/Images/DSCF*.JPG
-Branding/brand_assets/Videos/
+design/brand/brand_assets/Images/_DSC*.jpg
+design/brand/brand_assets/Images/IMG_*.JPG
+design/brand/brand_assets/Images/DSCF*.JPG
+design/brand/brand_assets/Videos/
 
 # Dev artifacts
 tmp-img-*.png
-view-logo.mjs
 *.mjs.bak
 .claude/
+
+# Local strategy & tools docs (credentials, scripts, audit files)
+tools/
+
+# Business data — sensitive / local only
+sale reports/
+
+# Marketing assets — local only
+qrcode google/

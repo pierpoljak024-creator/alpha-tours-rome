@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FIAT 500 — 4-Hour Dolce Vita Experience — Alpha Tours Rome. An intimate 4-hour journey through Rome's hidden gems by vintage Fiat 500: limoncello at Circo Massimo, picnic at Villa Pamphili, live music, Roman food tasting, and more." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://alphatoursrome.com/tours/fiat500-4h-experience.html" />
+  <meta property="og:title" content="FIAT 500 — 4-Hour Dolce Vita Experience — Alpha Tours Rome" />
+  <meta property="og:description" content="An intimate 4-hour journey through Rome's hidden gems by vintage Fiat 500: limoncello at Circo Massimo, picnic at Villa Pamphili, live music, Roman food tasting, and more." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="en_IT" />
+  <title>FIAT 500 — 4-Hour Dolce Vita Experience — Alpha Tours Rome</title>
+  <link rel="icon" href="../assets/images/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .tour-page-hero {
+      background: linear-gradient(135deg, var(--color-primary) 0%, #1e3019 100%);
+      padding: 5rem 1.5rem 3.5rem;
+      color: #fff;
+      text-align: center;
+    }
+    .tour-page-hero .breadcrumb { margin-bottom: 1.5rem; justify-content: center; }
+    .tour-page-hero .breadcrumb a, .tour-page-hero .breadcrumb span { color: rgba(255,255,255,0.65); }
+    .tour-page-hero .breadcrumb span[aria-current] { color: #fff; }
+    .tour-page-hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      margin-bottom: 1rem;
+      line-height: 1.15;
+    }
+    .tour-page-hero .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      justify-content: center; margin: 1rem 0 1.5rem;
+    }
+    .tour-page-hero .meta-chip {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 2rem;
+      padding: 0.35rem 0.9rem;
+      font-size: 0.82rem;
+      color: #fff;
+    }
+    .tour-page-hero .hero-desc {
+      max-width: 640px;
+      margin: 0 auto 2rem;
+      font-size: 1rem;
+      line-height: 1.7;
+      opacity: 0.88;
+    }
+    .exp-badge { display:inline-block; background:var(--color-accent); color:#1a1a1a; font-size:0.75rem; font-weight:700; padding:0.3rem 0.8rem; border-radius:2rem; margin-left:0.75rem; vertical-align:middle; }
+
+    /* ── Itinerary section ── */
+    .itinerary-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 2rem;
+    }
+    .itinerary-section .back-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--color-primary); font-weight: 600; font-size: 0.88rem;
+      text-decoration: none; margin-bottom: 1.5rem;
+    }
+    .itinerary-section .back-link:hover { text-decoration: underline; }
+    .itinerary-intro {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    .itinerary-intro h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      color: var(--color-primary);
+      margin-bottom: 0.75rem;
+    }
+    .itinerary-intro p {
+      color: #666;
+      font-size: 0.95rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+    .itinerary-stops {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+      padding-left: 2.5rem;
+    }
+    /* Vertical timeline line */
+    .itinerary-stops::before {
+      content: '';
+      position: absolute;
+      left: 1rem;
+      top: 1.2rem;
+      bottom: 1.2rem;
+      width: 2.5px;
+      background: linear-gradient(to bottom, var(--color-primary), var(--color-accent), var(--color-highlight));
+      border-radius: 2px;
+    }
+    .itinerary-stop {
+      position: relative;
+      padding: 1.2rem 0 1.2rem 1.5rem;
+      border-left: none;
+    }
+    .itinerary-stop:last-child { padding-bottom: 0.5rem; }
+    /* Dot on timeline */
+    .itinerary-stop::before {
+      content: '';
+      position: absolute;
+      left: -1.6rem;
+      top: 1.5rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px var(--color-primary);
+      z-index: 1;
+    }
+    .itinerary-stop:nth-child(2)::before { background: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent); }
+    .itinerary-stop:nth-child(3)::before { background: var(--color-highlight); box-shadow: 0 0 0 2px var(--color-highlight); }
+    .itinerary-stop:nth-child(4)::before { background: var(--color-primary); box-shadow: 0 0 0 2px var(--color-primary); }
+    .itinerary-stop:nth-child(5)::before { background: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent); }
+    .itinerary-stop:nth-child(6)::before { background: var(--color-highlight); box-shadow: 0 0 0 2px var(--color-highlight); }
+    .itinerary-stop:nth-child(7)::before { background: var(--color-primary); box-shadow: 0 0 0 2px var(--color-primary); }
+    .itinerary-stop:nth-child(8)::before { background: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent); }
+    .stop-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: #fff;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+    .stop-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .stop-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      color: var(--color-primary);
+      line-height: 1.3;
+    }
+    .stop-body {
+      color: #444;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      padding-left: 2.75rem;
+    }
+    .stop-body p { margin-bottom: 0.4rem; }
+    .stop-highlight {
+      display: inline-block;
+      background: rgba(245,179,93,0.15);
+      color: #7a5a1a;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.2rem 0.7rem;
+      border-radius: 2rem;
+      margin-top: 0.3rem;
+    }
+
+    /* ── Summary Box ── */
+    .tour-summary {
+      background: var(--color-bg);
+      border-radius: 1.2rem;
+      padding: 2rem;
+      margin: 2.5rem 1.5rem;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .tour-summary h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--color-primary);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .tour-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+    .tour-summary-item {
+      text-align: center;
+      padding: 0.8rem;
+    }
+    .tour-summary-item .summary-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+    .tour-summary-item strong {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-primary);
+      margin-bottom: 0.2rem;
+    }
+    .tour-summary-item span {
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    /* ── CTA Section ── */
+    .cta-section {
+      text-align: center;
+      padding: 2rem 1.5rem 4rem;
+    }
+    .cta-section .btn {
+      padding: 1rem 2.5rem;
+      font-size: 1.05rem;
+    }
+    .cta-section p {
+      color: #666;
+      font-size: 0.88rem;
+      margin-top: 0.75rem;
+    }
+
+    .contact-strip {
+      background: var(--color-primary);
+      color: #fff;
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+    }
+    .contact-strip h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .contact-strip p { opacity: 0.8; margin-bottom: 1.2rem; }
+    .contact-strip a { color: var(--color-accent); font-weight: 700; text-decoration: none; }
+    .contact-strip a:hover { text-decoration: underline; }
+
+    /* ── Highlights / Why choose ── */
+    .highlights-box {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 2.5rem;
+    }
+    .highlights-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--color-primary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .highlights-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+    .highlights-grid li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: #444;
+      line-height: 1.4;
+    }
+    .highlights-grid li::before {
+      content: '✓';
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      flex-shrink: 0;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 0.65rem;
+      font-weight: 700;
+    }
+    @media (max-width: 600px) {
+      .highlights-grid { grid-template-columns: 1fr; }
+      .itinerary-stops { padding-left: 1.8rem; }
+      .itinerary-stop::before { left: -1.05rem; width: 12px; height: 12px; }
+      .stop-body { padding-left: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header" id="site-header">
+
+
+    <!-- Row 1: TripAdvisor Awards + Logo -->
+    <div class="header-ta-strip">
+      <div class="header-ta-logo-wrap">
+        <img src="../assets/images/logos/logo-ufficiale-header.png" alt="Alpha Tours Rome" class="header-ta-logo-img" loading="eager" />
+      </div>
+      <div class="header-ta-badges">
+        <img src="../assets/images/tripadvisor/2017_en-bk.png" alt="TripAdvisor Certificate of Excellence 2017" loading="eager" />
+        <img src="../assets/images/tripadvisor/2018_en-bk.png" alt="TripAdvisor Certificate of Excellence 2018" loading="eager" />
+        <img src="../assets/images/tripadvisor/2019_en-bk.png" alt="TripAdvisor Certificate of Excellence 2019" loading="eager" />
+        <img src="../assets/images/tripadvisor/tchotel_2023_L.png" alt="TripAdvisor Travelers' Choice 2023" loading="eager" />
+        <img src="../assets/images/tripadvisor/tchotel_2024_L.png" alt="TripAdvisor Travelers' Choice 2024" loading="eager" />
+        <img src="../assets/images/tripadvisor/tchotel_2025_L.png" alt="TripAdvisor Travelers' Choice 2025" loading="eager" />
+      </div>
+    </div>
+
+    <!-- Row 2: Social + Contact -->
+    <div class="header-social-strip">
+      <div class="header-social-inner">
+        <div class="header-follow">
+          <span class="header-follow-label">Follow us</span>
+          <a href="https://instagram.com/alphatoursrome" target="_blank" rel="noopener" aria-label="Instagram" class="header-social-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4.5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="https://facebook.com/Rome-Tour-guide-104817567778940" target="_blank" rel="noopener" aria-label="Facebook" class="header-social-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://wa.me/393758297864" target="_blank" rel="noopener" aria-label="WhatsApp" class="header-social-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          </a>
+        </div>
+        <a href="https://wa.me/393758297864" class="header-phone-link" target="_blank" rel="noopener" aria-label="Contact on WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          +39 375 829 7864
+        </a>
+      </div>
+    </div>
+
+    <!-- Row 3: Navigation -->
+    <nav class="header-nav" aria-label="Main navigation">
+      <div class="nav-container">
+        <button class="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-menu">
+          <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="nav-menu" role="list">
+          <li><a href="../index.html">HOME</a></li>
+          <li><a href="../golf-cart.html">GOLF CART</a></li>
+          <li><a href="../vespa.html">VESPA SIDECAR</a></li>
+          <li><a href="../fiat500.html">FIAT 500</a></li>
+          <li><a href="../food-tours.html">FOOD TOURS</a></li>
+          <li><a href="../day-trips.html">DAY TRIPS</a></li>
+          <li><a href="../transfers.html">TRANSFERS</a></li>
+          <li><a href="../about.html">ABOUT</a></li>
+          <li class="nav-cta-li"><a href="../contact.html" class="nav-cta">BOOK NOW</a></li>
+        </ul>
+      </div>
+    </nav>
+
+  </header>
+
+
+  <main id="main-content">
+
+    <div class="tour-page-hero">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html">Home</a>
+        <span aria-hidden="true">›</span>
+        <a href="../fiat500.html">FIAT 500 Vintage Tours</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">FIAT 500 — 4-Hour Dolce Vita Experience</span>
+      </nav>
+      <h1>FIAT 500 — 4-Hour Dolce Vita Experience<span class="exp-badge">New</span></h1>
+      <div class="hero-meta">
+        <span class="meta-chip">🚗 Fiat 500</span>
+        <span class="meta-chip">👥 Private tour</span>
+        <span class="meta-chip">⏱ 4 hours</span>
+        <span class="meta-chip">🍷 Tastings included</span>
+        <span class="meta-chip">🎵 Live music</span>
+      </div>
+      <p class="hero-desc">An immersive 4-hour journey through Rome's most enchanting corners in a vintage Fiat 500. From a limoncello welcome at Circo Massimo to a picnic with live music in Villa Pamphili, prosecco and seasonal fruit, and a Roman food tasting — this is the ultimate Dolce Vita experience.</p>
+      <script type="text/javascript" src="https://widgets.bokun.io/assets/javascripts/apps/build/BokunWidgetsLoader.js?bookingChannelUUID=a67640c9-6709-471a-a254-db5093d80d81" async></script>
+  <style>
+    #bokun_4h_fiat500_hero {
+      display: inline-block; padding: 14px 32px;
+      background: var(--color-accent); border-radius: 6px;
+      font-weight: 700; font-size: 1rem; color: #1a1a1a;
+      border: none; cursor: pointer;
+      transition: background .2s cubic-bezier(0.22,1,0.36,1), transform .2s cubic-bezier(0.22,1,0.36,1);
+      font-family: 'Inter', sans-serif; letter-spacing: 0.01em;
+    }
+    #bokun_4h_fiat500_hero:hover { background: #e8a040; transform: translateY(-1px); }
+    #bokun_4h_fiat500_hero:active { background: #d49030; transform: translateY(0); }
+  </style>
+  <button class="bokunButton" id="bokun_4h_fiat500_hero"
+    data-src="https://widgets.bokun.io/online-sales/a67640c9-6709-471a-a254-db5093d80d81/experience/1113873?partialView=1"
+    data-testid="widget-book-button">Book Now</button>
+    </div>
+
+    <!-- Tour Summary Bar -->
+    <div class="tour-summary">
+      <h3>Experience at a Glance</h3>
+      <div class="tour-summary-grid">
+        <div class="tour-summary-item">
+          <div class="summary-icon">🕐</div>
+          <strong>Duration</strong>
+          <span>4 hours</span>
+        </div>
+        <div class="tour-summary-item">
+          <div class="summary-icon">📍</div>
+          <strong>Meeting Point</strong>
+          <span>Circo Massimo</span>
+        </div>
+        <div class="tour-summary-item">
+          <div class="summary-icon">👥</div>
+          <strong>Group</strong>
+          <span>Private · Just your party</span>
+        </div>
+        <div class="tour-summary-item">
+          <div class="summary-icon">🍽️</div>
+          <strong>Includes</strong>
+          <span>Limoncello, picnic, prosecco, Roman food tasting</span>
+        </div>
+        <div class="tour-summary-item">
+          <div class="summary-icon">🎵</div>
+          <strong>Extras</strong>
+          <span>Live music performance · Polaroid photo</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full Itinerary -->
+    <div class="itinerary-section">
+      <a href="../fiat500.html" class="back-link">← All FIAT 500 Vintage Tours</a>
+      <div class="itinerary-intro">
+        <h2>Your 4-Hour Journey</h2>
+        <p>Every moment is crafted to immerse you in authentic Roman culture — from iconic viewpoints to hidden gems, local flavours, and unforgettable surprises.</p>
+      </div>
+
+      <div class="itinerary-stops">
+
+        <!-- Stop 1: Circo Massimo -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>🚩 Circo Massimo — Limoncello & Welcome Photos</h3>
+          </div>
+          <div class="stop-body">
+            <p>Your adventure begins at the legendary <strong>Circo Massimo</strong>, where you'll meet your guide and your iconic vintage Fiat 500. Kick off the experience with a refreshing <strong>limoncello</strong> toast — the perfect Italian welcome.</p>
+            <p>Capture the moment with professional-style photos of you and the Fiat 500 against the stunning backdrop of the <strong>Roseto Comunale</strong> (the Municipal Rose Garden) and the Palatine Hill. A picture-perfect start to your Roman adventure.</p>
+            <span class="stop-highlight">📸 Photo stop with Fiat 500 + Roseto Comunale backdrop</span>
+          </div>
+        </div>
+
+        <!-- Stop 2: Fontana di Acqua Paola -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>⛲ Fontana di Acqua Paola — Il Fontanone</h3>
+          </div>
+          <div class="stop-body">
+            <p>Hop in the Fiat 500 and cruise up to one of Rome's most spectacular fountains — the <strong>Fontana di Acqua Paola</strong>, also known as <em>"Il Fontanone"</em>. Located on the Janiculum Hill, this monumental Baroque fountain offers breathtaking views over the city.</p>
+            <p>Marvel at the majestic water jets and take in the panoramic scenery of Rome's rooftops stretching out below.</p>
+          </div>
+        </div>
+
+        <!-- Stop 3: Gianicolo -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>🌅 Gianicolo (Janiculum Hill) — Optional Photo Stop</h3>
+          </div>
+          <div class="stop-body">
+            <p>Continue to the top of the <strong>Gianicolo</strong> (Janiculum Hill), one of Rome's most beloved viewpoints. If you wish, we'll stop here for a quick photo session capturing the <strong>unbeatable panoramic vista</strong> of the Eternal City — from St. Peter's Dome to the historic centre.</p>
+            <p>This stop is entirely optional, so you can soak in the views at your own pace.</p>
+            <span class="stop-highlight">📷 Optional photo stop — panoramic Rome views</span>
+          </div>
+        </div>
+
+        <!-- Stop 4: Villa Pamphili Picnic -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>🧺 Villa Pamphili — Picnic with Live Music</h3>
+          </div>
+          <div class="stop-body">
+            <p>Escape the city bustle as we arrive at the lush <strong>Villa Pamphili</strong>, Rome's largest public park. Here, a delightful <strong>picnic</strong> awaits you under the shade of historic pines.</p>
+            <p>Savour a selection of <strong>fine Italian cheeses and cured meats</strong>, paired with fresh bread and seasonal accompaniments — a true taste of <em>la dolce vita</em> in nature's embrace. As you relax and enjoy, a <strong>live musical performance</strong> with songs will create an enchanting atmosphere, making this moment truly unforgettable.</p>
+            <span class="stop-highlight">🧀 Cheeses & cured meats picnic · 🎶 Live music & songs</span>
+          </div>
+        </div>
+
+        <!-- Stop 5: Optical Illusion -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>🔭 The Optical Illusion of St. Peter's Basilica</h3>
+          </div>
+          <div class="stop-body">
+            <p>Prepare to be amazed by one of Rome's most curious secrets — the <strong>optical illusion of St. Peter's Basilica</strong>. From a specific perspective along the avenue leading to the Vatican, the majestic dome appears to "shrink" or "move" as you approach it. Your guide will show you exactly where to stand to capture this mind-bending effect in your photos!</p>
+            <span class="stop-highlight">🔮 A must-see Roman curiosity + photo trick</span>
+          </div>
+        </div>
+
+        <!-- Stop 6: Vincenzo Frutta e Verdura -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>🍓 Vincenzo Frutta e Verdura — Strawberries & Prosecco</h3>
+          </div>
+          <div class="stop-body">
+            <p>We make a stop at the charming <strong>Vincenzo Frutta e Verdura</strong> stand, a beloved local spot. Here, depending on the season, you'll enjoy <strong>fresh strawberries or melon</strong> paired with a glass of sparkling <strong>prosecco</strong> — a simple yet exquisite Roman pleasure.</p>
+            <p>A <strong>Polaroid photo</strong> will be taken to capture this sweet, candid moment — a tangible memory to take home with you.</p>
+            <span class="stop-highlight">🥂 Strawberries/melon + prosecco · 📸 Polaroid photo keepsake</span>
+          </div>
+        </div>
+
+        <!-- Stop 7: Testaccio --- Taste Accio -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>🍝 Testaccio — Roman Food Tasting at Taste Accio</h3>
+          </div>
+          <div class="stop-body">
+            <p>We drive to the historic <strong>Testaccio</strong> neighbourhood — the true heart of Roman cuisine. At the renowned <strong>Taste Accio restaurant</strong>, you'll indulge in a tasting of <strong>authentic Roman foods</strong>. From classic pasta dishes to traditional Roman specialties, every bite tells a story of culinary heritage.</p>
+            <p>Testaccio is where locals go to eat, and this experience will give you a genuine taste of Roman gastronomic culture.</p>
+            <span class="stop-highlight">🍷 Authentic Roman food tasting at Taste Accio</span>
+          </div>
+        </div>
+
+        <!-- Stop 8: Drop Off -->
+        <div class="itinerary-stop">
+          <div class="stop-header">
+            <h3>🏁 Return to Circo Massimo</h3>
+          </div>
+          <div class="stop-body">
+            <p>After an afternoon filled with iconic sights, hidden gems, live music, and unforgettable flavours, your guide will drive you back to <strong>Circo Massimo</strong>, where your 4-hour Dolce Vita journey began.</p>
+            <p><em>Arrivederci e grazie</em> — until your next Roman adventure!</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Highlights -->
+    <div class="highlights-box">
+      <h3>Why You'll Love This Experience</h3>
+      <ul class="highlights-grid">
+        <li>Vintage Fiat 500 — iconic Italian style</li>
+        <li>Private tour — just you and your group</li>
+        <li>Limoncello welcome toast at Circo Massimo</li>
+        <li>Professional photos with the Fiat 500</li>
+        <li>Picnic with cheeses & cured meats in Villa Pamphili</li>
+        <li>Live music performance during the picnic</li>
+        <li>Prosecco & seasonal fruit at a local Roman spot</li>
+        <li>Polaroid keepsake photo</li>
+        <li>Roman food tasting at Taste Accio in Testaccio</li>
+        <li>All food & drinks included</li>
+      </ul>
+    </div>
+
+    <!-- Bokun Booking Widget -->
+    <div class="bokun-page-wrap" style="padding: 2rem 0;">
+      <div class="bokun-widget-section" style="max-width: 900px; margin: 0 auto; padding: 0 1.5rem;">
+        <script type="text/javascript" src="https://widgets.bokun.io/assets/javascripts/apps/build/BokunWidgetsLoader.js?bookingChannelUUID=a67640c9-6709-471a-a254-db5093d80d81" async></script>
+        <div class="bokunWidget" data-src="https://widgets.bokun.io/online-sales/a67640c9-6709-471a-a254-db5093d80d81/experience/1113873"></div>
+        <noscript>Please enable javascript in your browser to book</noscript>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div id="book-section" class="cta-section">
+      <h2 style="font-family:'Playfair Display',serif; font-size:clamp(1.4rem,3vw,2rem); color:var(--color-primary); margin-bottom:1rem;">Ready to Live <em style="font-style:normal; color:var(--color-accent);">La Dolce Vita</em>?</h2>
+      <p style="color:#666; margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto; line-height:1.7;">Book your 4-hour FIAT 500 Dolce Vita Experience and discover Rome like never before — through its flavours, views, music, and timeless charm.</p>
+      <a href="https://wa.me/393758297864?text=Hi%20Alpha%20Tours!%20I%27d%20like%20to%20book%20the%204-hour%20FIAT%20500%20Dolce%20Vita%20Experience." class="btn btn-primary" target="_blank" rel="noopener" style="padding:1rem 2.5rem; font-size:1.05rem;">Book via WhatsApp</a>
+      <p>Or <a href="../contact.html" style="color:var(--color-primary); font-weight:700;">contact us</a> for more information</p>
+    </div>
+
+    <div class="contact-strip">
+      <h3>Need help planning?</h3>
+      <p>Our team is available 7 days a week — we respond within hours.</p>
+      <a href="tel:+393758297864">+39 375 829 7864</a> &nbsp;·&nbsp;
+      <a href="https://instagram.com/alphatoursrome" target="_blank" rel="noopener">@alphatoursrome</a> &nbsp;·&nbsp;
+      <a href="../contact.html">Send a message</a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="../assets/images/logos/alpha-logo.svg" alt="Alpha Tours Rome" width="48" height="48" loading="lazy" />
+          <p>Your Local Experts for Unforgettable Experiences — Rome, Italy.</p>
+          <p class="footer-tagline">Local Guides · Authentic Tours · Memorable Moments</p>
+        </div>
+        <div class="footer-links">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="../about.html">About Us</a></li>
+            <li><a href="../services.html">Tours & Services</a></li>
+            <li><a href="../blog.html">Travel Blog</a></li>
+            <li><a href="../contact.html">Contact & Booking</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Our Tours</h4>
+          <ul>
+            <li><a href="../golf-cart.html">Golf Cart Tours</a></li>
+            <li><a href="../vespa.html">Vespa Sidecar</a></li>
+            <li><a href="../fiat500.html">FIAT 500 Vintage</a></li>
+            <li><a href="../food-tours.html">Food Tours</a></li>
+            <li><a href="../day-trips.html">Private Day Trips</a></li>
+            <li><a href="../transfers.html">Airport Transfers</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p><a href="tel:+393758297864">+39 375 829 7864</a></p>
+          <p><a href="https://instagram.com/alphatoursrome" target="_blank" rel="noopener">@alphatoursrome</a></p>
+          <p><a href="https://alphatoursrome.com" target="_blank" rel="noopener">alphatoursrome.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Alpha Tours Rome. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script src="../script.js"></script>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/393758297864?text=Hi%20Alpha%20Tours!%20I%20saw%20your%20website%20and%20I%27d%20like%20to%20know%20more%20about%20your%20tours." class="whatsapp-float" aria-label="Chat with us on WhatsApp" target="_blank" rel="noopener noreferrer">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="whatsapp-float-label">Chat with us!</span>
+  </a>
+</body>
+</html>
