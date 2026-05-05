@@ -1,4 +1,4 @@
-# Alpha Tours Website Project
+della modifica del sito we# Alpha Tours Website Project
 
 ## Brand Identity
 - Company: **Alpha Tours** – Rome-based boutique tour company
@@ -545,6 +545,31 @@ Stop: `modal app stop alpha-tours-rome-bot`
 ## Secrets (Modal secret: `alpha-tours-env`)
 - `TELEGRAM_BOT_TOKEN`, `OPENROUTER_API_KEY`, `GITHUB_TOKEN`
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REFRESH_TOKEN`
+
+## SOUL.md 2.0 — Piano di Riscrittura (approvato)
+
+### Problemi SOUL.md attuale
+1. **"EXECUTE this"** — Hermes non ha un comando `EXECUTE`, deve usare shell commands
+2. **No browser toolset** — Hermes HA il tool (navigate, click, type, scroll) ma non gli diciamo di usarlo
+3. **Path solo per Modal** (`/root/repo/...`) — non funziona in locale
+4. **No visual loop check** — modifica "al buio" senza screenshot prima/dopo
+5. **No rollback** — se sbaglia, nessun "annulla"
+6. **No skill index** — skills esistono ma Hermes non sa che sono lì
+
+### Nuova SOUL.md 2.0 deve includere:
+- Fix: shell commands reali (non "EXECUTE")
+- Fix: dual paths (locale + Modal)
+- Nuovo: browser toolset per screenshot visivi
+- Nuovo: visual loop (screenshot PRIMA → conferma → modifica → screenshot DOPO → approvazione → commit)
+- Nuovo: rollback (`git revert HEAD --no-edit && git push`)
+- Nuovo: skills index reference
+- Nuovo: self-improvement section
+
+### Skills da creare
+1. `skills/index.md` — registry skills
+2. `skills/web-editor.md` — modifica sito con preview visiva
+3. `skills/design-system.md` — regole frontend (colori #324e2c, #a71b20, #fcefe6, #f5b35d; font Playfair+Inter)
+4. `skills/self-improve.md` — auto-apprendimento
 
 ## Local Test Progress (May 5, 2026) — Summary
 - **Config locale fixata**: `~/.hermes/config.yaml` aggiornato (formato `model:` section corretto)
