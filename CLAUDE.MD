@@ -577,7 +577,7 @@ Stop: `modal app stop alpha-tours-rome-bot`
 - **`hermes doctor`**: ✅ tutto OK (config valida, OpenRouter funzionante, terminal tool disponibile)
 - **T1 - Customer query test**: ✅ `hermes -z "Ciao! What tours do you offer?"` → risposta perfetta con brand voice
 - **Google OAuth test**: ✅ token ottenuto ma **HTTP 429** (rate limit colpito) — test rimandato a stasera
-- **Credenziali Google corrette**: client_secret = `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`, refresh_token = `1//096WoECPUC0v5CgYIARAAGAkSNwF-L9Ir7d7_gstTSuEvDMWSXgGvWkZ8M__UYMMhBDXy5T8VyiO5x7RW2B3_wuYDsTh436QAmC0`
+- **Credenziali Google**: Su Modal secret (`alpha-tours-env`) e in `.env` locale (gitignored)
 - **File creato**: `local_test_plan.md` — piano di test completo con checklist
 - **File aggiornato**: `plan.md` — riscritto con stato attuale e test rimanenti
 

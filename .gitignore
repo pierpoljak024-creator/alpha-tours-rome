@@ -34,3 +34,8 @@ sale reports/
 
 # Marketing assets — local only
 qrcode google/
+
+# Secret files — DO NOT COMMIT
+.env
+google-business-oauth-token.json
+auth_google_business.py

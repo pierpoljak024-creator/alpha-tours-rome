@@ -62,6 +62,7 @@ TU: "No" / "Annulla" → git revert + restore
 | self-improve | `skills/self-improve.md` | Auto-apprendimento |
 
 ## 📝 Note
-- **Client secret corretto**: `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`
-- **Refresh token corretto**: `1//096WoECPUC0v5CgYIARAAGAkSNwF-L9Ir7d7_gstTSuEvDMWSXgGvWkZ8M__UYMMhBDXy5T8VyiO5x7RW2B3_wuYDsTh436QAmC0`
+- **Google OAuth**: Credenziali su Modal secret (`alpha-tours-env`)
+- **Client secret**: Su Modal secret, mai in chiaro nel repo
+- **Refresh token**: Su Modal secret, mai in chiaro nel repo
 - **Google API**: 429 rate limit colpito — aspettare prima di testare recensioni
