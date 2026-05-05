@@ -1,0 +1,74 @@
+#!/usr/bin/env python3
+"""Test the review checker directly on Modal."""
+import sys, json, os
+from urllib.request import Request, urlopen
+from urllib.parse import urlencode
+
+CID = os.environ.get("GOOGLE_CLIENT_ID")
+CSEC = os.environ.get("GOOGLE_CLIENT_SECRET")
+REF = os.environ.get("GOOGLE_REFRESH_TOKEN")
+
+if not all([CID, CSEC, REF]):
+    print("❌ Missing env vars")
+    sys.exit(1)
+
+# Step 1: Get token
+body = urlencode({"client_id":CID,"client_secret":CSEC,"refresh_token":REF,"grant_type":"refresh_token"}).encode()
+req = Request("https://oauth2.googleapis.com/token", data=body, headers={"Content-Type":"application/x-www-form-urlencoded"})
+resp = json.loads(urlopen(req).read())
+token = resp.get("access_token")
+if not token:
+    print(f"❌ OAuth failed: {resp}")
+    sys.exit(1)
+print("✅ STEP 1: OAuth token obtained!")
+
+# Step 2: List accounts
+headers = {"Authorization":f"Bearer {token}"}
+req2 = Request("https://mybusinessaccountmanagement.googleapis.com/v1/accounts", headers=headers)
+accounts = json.loads(urlopen(req2).read())
+accts = accounts.get("accounts", [])
+print(f"✅ STEP 2: Found {len(accts)} account(s)")
+for a in accts:
+    print(f"   - {a['name']} ({a.get('accountName','?')})")
+
+if not accts:
+    print("❌ No accounts. Check OAuth setup has business.manage scope.")
+    sys.exit(1)
+
+aname = accts[0]["name"]
+
+# Step 3: List locations
+req3 = Request(f"https://mybusinessbusinessinformation.googleapis.com/v1/{aname}/locations", headers=headers)
+locations = json.loads(urlopen(req3).read())
+locs = locations.get("locations", [])
+print(f"✅ STEP 3: Found {len(locs)} location(s)")
+for l in locs:
+    print(f"   - {l['name']} ({l.get('title','?')})")
+
+if not locs:
+    print("   (trying v4 API...)")
+    req3b = Request(f"https://mybusiness.googleapis.com/v4/{aname}/locations", headers=headers)
+    locations = json.loads(urlopen(req3b).read())
+    locs = locations.get("locations", [])
+    print(f"   v4: Found {len(locs)} location(s)")
+    for l in locs:
+        print(f"   - {l['name']} ({l.get('locationName','?')})")
+
+if not locs:
+    print("❌ No locations found.")
+    sys.exit(1)
+
+lname = locs[0]["name"]
+
+# Step 4: Fetch reviews
+req4 = Request(f"https://mybusiness.googleapis.com/v4/{lname}/reviews", headers=headers)
+reviews = json.loads(urlopen(req4).read())
+revs = reviews.get("reviews", [])
+print(f"✅ STEP 4: Found {len(revs)} review(s)")
+for r in revs[:5]:
+    n = r.get("reviewer",{}).get("displayName","?")
+    s = r.get("starRating",5)
+    t = r.get("comment","")[:150]
+    print(f"   [{s}★] {n}: {t}")
+
+print("\n🎉 ALL STEPS PASSED!")

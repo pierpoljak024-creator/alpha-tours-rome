@@ -1,0 +1,6 @@
+SOUL.md: 4974 chars loaded
+config.yaml: 84 chars loaded
++- Error ---------------------------------------------------------------------+
+| 'charmap' codec can't encode character '\u2713' in position 0: character    |
+| maps to <undefined>                                                         |
++-----------------------------------------------------------------------------+

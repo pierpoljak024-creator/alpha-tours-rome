@@ -84,27 +84,28 @@ cd /root/repo/alpha-tours-rome && python tools/post_review_reply.py
 Then READ the output and tell the CEO what was posted.
 
 ### POWER 3: Edit Website ("change price", "update text", "edit the site")
-EXECUTE this Python code to edit an HTML file:
+You can edit HTML files and commit/push to GitHub. This is how it works:
 
-```python
-import subprocess, os
-from pathlib import Path
-repo = Path("/root/repo/alpha-tours-rome")
+1. **Show the file to the CEO first** — run this command (replace FILENAME.html with the actual file):
+   ```
+   python -c "from pathlib import Path; f = Path('/root/repo/alpha-tours-rome/tours/FILENAME.html'); print(f.read_text()[:3000])"
+   ```
 
-# READ first - show the file
-filepath = repo / "tours/FILENAME.html"  # <-- CHANGE THIS to the actual file
-print(filepath.read_text()[:3000])
+2. **Wait for the CEO to tell you exactly what to change** (e.g. "change €140 to €150")
 
-# Then the CEO will tell you what to change
-# WRITE the changed content and commit:
-# filepath.write_text("... new HTML ...")
-# subprocess.run(["git","-C",str(repo),"add","-A"], capture_output=True)
-# subprocess.run(["git","-C",str(repo),"commit","-m","fix: updated content"], capture_output=True)
-# token = os.environ.get("GITHUB_TOKEN","")
-# auth_url = "https://"+token+"@github.com/pierpoljak024-creator/alpha-tours-rome.git"
-# subprocess.run(["git","-C",str(repo),"push",auth_url], capture_output=True)
-# print("✅ Pushed! Netlify will deploy automatically.")
-```
+3. **Make the change** using a Python one-liner:
+   ```
+   python -c "from pathlib import Path; f = Path('/root/repo/alpha-tours-rome/tours/FILENAME.html'); c = f.read_text(); c = c.replace('OLD_TEXT', 'NEW_TEXT'); f.write_text(c); print('✅ File updated!')"
+   ```
+
+4. **Commit and push to GitHub**:
+   ```
+   cd /root/repo/alpha-tours-rome && git add -A && git commit -m 'fix: updated content' && git push
+   ```
+
+5. Tell the CEO: "✅ Updated! Netlify will deploy automatically in ~1 minute."
+
+IMPORTANT: Always run these as shell commands (the system will execute them and show you the output). Never write Python code blocks — use python -c one-liners instead.
 
 ---
 
@@ -203,13 +204,156 @@ def _clone_repo():
         print("[GIT] Repo pulled.")
 
 
-def _init_seen_file():
-    """Initialize seen-reviews.json if it doesn't exist."""
-    seen_file = REPO_DIR / "tools" / "seen-reviews.json"
-    seen_file.parent.mkdir(parents=True, exist_ok=True)
+def _init_tools():
+    """Write Python scripts + seen-reviews.json + cache.json to tools/."""
+    tools_dir = REPO_DIR / "tools"
+    tools_dir.mkdir(parents=True, exist_ok=True)
+
+    # Write check_reviews.py (with caching of account/location names + null-safe cache)
+    (tools_dir / "check_reviews.py").write_text(r"""#!/usr/bin/env python3
+import json, os, sys, time
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError
+from urllib.parse import urlencode
+from pathlib import Path
+H = Path(__file__).parent
+SF = H / "seen-reviews.json"
+OF = H / "new-reviews.json"
+CF = H / "cache.json"
+CID = os.environ.get("GOOGLE_CLIENT_ID")
+CSEC = os.environ.get("GOOGLE_CLIENT_SECRET")
+REF = os.environ.get("GOOGLE_REFRESH_TOKEN")
+if not all([CID, CSEC, REF]):
+    print("Google OAuth not configured."); sys.exit(1)
+def ac(u, data=None, headers=None, r=4):
+    for a in range(r):
+        try:
+            req = Request(u, data=data, headers=headers or {})
+            return json.loads(urlopen(req).read())
+        except HTTPError as e:
+            if e.code == 429 and a < r - 1:
+                w = (2 ** a) * 2; print(f"  RL. Wait {w}s..."); time.sleep(w); continue
+            raise
+body = urlencode({"client_id": CID, "client_secret": CSEC, "refresh_token": REF, "grant_type": "refresh_token"}).encode()
+t = ac("https://oauth2.googleapis.com/token", data=body, headers={"Content-Type": "application/x-www-form-urlencoded"}).get("access_token")
+print("Token.")
+hdrs = {"Authorization": f"Bearer {t}"}
+if CF.exists():
+    try:
+        c = json.loads(CF.read_text()); an = c.get("an"); ln = c.get("ln")
+        if an and ln:
+            print(f"Cache: {an} / {ln}")
+        else:
+            raise ValueError("empty cache")
+    except Exception:
+        an = ln = None
+if not an or not ln:
+    accts = ac("https://mybusinessaccountmanagement.googleapis.com/v1/accounts", headers=hdrs).get("accounts", [])
+    print(f"Accounts: {len(accts)}")
+    if not accts: print("No accounts."); sys.exit(1)
+    an = accts[0]["name"]; locs = []; time.sleep(1)
+    for b in ["mybusinessbusinessinformation.googleapis.com/v1", "mybusiness.googleapis.com/v4"]:
+        try:
+            r = ac(f"https://{b}/{an}/locations", headers=hdrs); locs = r.get("locations", [])
+            locs = [l for l in locs if l.get("name")]; break
+        except HTTPError as e:
+            if e.code != 404: print(f"  {b}: {e.code}")
+    if not locs: print("No locations."); sys.exit(1)
+    ln = locs[0]["name"]
+    CF.write_text(json.dumps({"an": an, "ln": ln})); print(f"Cached: {an} / {ln}")
+seen = set(json.loads(SF.read_text())) if SF.exists() else set()
+revs = []; time.sleep(1)
+for b in ["mybusinessbusinessinformation.googleapis.com/v1", "mybusiness.googleapis.com/v4", "mybusiness.googleapis.com/v3"]:
+    try:
+        d = ac(f"https://{b}/{ln}/reviews", headers=hdrs); revs = d.get("reviews", []); break
+    except HTTPError as e:
+        if e.code != 404: print(f"  {b}: {e.code}")
+nr = [r for r in revs if r.get("reviewId", "") not in seen]
+lt = ln.split("/")[-1]
+print(f"\\n{lt}: {len(revs)} total, {len(nr)} new")
+for r in nr:
+    n = r.get("reviewer", {}).get("displayName", "?")
+    r2 = r.get("starRating", 5); t2 = r.get("comment", "")[:200]
+    print(f"  {n} ({r2}*): {t2}")
+OF.write_text(json.dumps(nr, indent=2) if nr else "[]")
+print(f"\\n{len(nr)} new." if nr else "\\nNo new.")""", encoding="utf-8")
+
+    # Write post_review_reply.py (REAL posting, not stub)
+    (tools_dir / "post_review_reply.py").write_text(r"""#!/usr/bin/env python3
+import json, os, sys, time
+from urllib.request import Request, urlopen
+from urllib.error import HTTPError
+from urllib.parse import urlencode
+from pathlib import Path
+H = Path(__file__).parent
+DF = H / "pending-drafts.json"
+SF = H / "seen-reviews.json"
+CF = H / "cache.json"
+if not DF.exists(): print("No drafts."); sys.exit(0)
+drafts = json.loads(DF.read_text())
+if not drafts: print("No drafts."); sys.exit(0)
+print(f"{len(drafts)} draft(s).")
+CID = os.environ.get("GOOGLE_CLIENT_ID")
+CSEC = os.environ.get("GOOGLE_CLIENT_SECRET")
+REF = os.environ.get("GOOGLE_REFRESH_TOKEN")
+if not all([CID, CSEC, REF]): print("OAuth not configured."); sys.exit(0)
+def ac(u, d=None, h=None, r=4):
+    for a in range(r):
+        try:
+            req = Request(u, data=d, headers=h or {}); return json.loads(urlopen(req).read())
+        except HTTPError as e:
+            if e.code == 429 and a < r - 1:
+                w = (2**a)*2; print(f"  RL. Wait {w}s..."); time.sleep(w); continue
+            raise
+body = urlencode({"client_id":CID,"client_secret":CSEC,"refresh_token":REF,"grant_type":"refresh_token"}).encode()
+token = ac("https://oauth2.googleapis.com/token", d=body, h={"Content-Type":"application/x-www-form-urlencoded"}).get("access_token")
+print("Token obtained.")
+if CF.exists():
+    try:
+        c = json.loads(CF.read_text()); an = c.get("an"); ln = c.get("ln")
+        if an and ln: print(f"Cache: {an} / {ln}")
+        else: raise ValueError
+    except Exception: an=ln=None
+if not an or not ln:
+    time.sleep(1); hd = {"Authorization":f"Bearer {token}"}
+    accts = ac("https://mybusinessaccountmanagement.googleapis.com/v1/accounts", h=hd).get("accounts",[])
+    if not accts: sys.exit(1)
+    an = accts[0]["name"]; time.sleep(1)
+    locs = ac(f"https://mybusinessbusinessinformation.googleapis.com/v1/{an}/locations", h=hd).get("locations",[])
+    if not locs: sys.exit(1)
+    ln = locs[0]["name"]
+    CF.write_text(json.dumps({"an":an,"ln":ln})); print(f"Cached: {an} / {ln}")
+time.sleep(1); hd = {"Authorization":f"Bearer {token}"}
+revs = ac(f"https://mybusiness.googleapis.com/v4/{ln}/reviews", h=hd).get("reviews",[])
+posted = 0
+for d in drafts:
+    match = next((r for r in revs if r.get("reviewId")==d.get("reviewId")), None)
+    if not match: print(f"Skip {d.get('name','?')} — no match"); posted+=1; continue
+    apiname = match["name"]; time.sleep(0.5)
+    try:
+        b = json.dumps({"comment":{"text":d.get("draftReply","Thanks!")}}).encode()
+        urlopen(Request(f"https://mybusiness.googleapis.com/v4/{apiname}/reply", data=b, headers={"Authorization":f"Bearer {token}","Content-Type":"application/json"}))
+        print(f"Posted to {d.get('name','?')} ({d.get('rating',5)}*)")
+        posted+=1
+    except HTTPError as e:
+        eb = e.read().decode(); print(f"Fail {d.get('name','?')}: HTTP {e.code} {eb[:200]}")
+    except Exception as ex: print(f"Fail {d.get('name','?')}: {ex}")
+seen = set(json.loads(SF.read_text())) if SF.exists() else set()
+seen.update(d["reviewId"] for d in drafts if d.get("reviewId"))
+SF.write_text(json.dumps(list(seen))); DF.write_text("[]")
+print(f"Done. {posted}/{len(drafts)} posted.")""", encoding="utf-8")
+
+    # seen-reviews.json + cache.json placeholders
+    seen_file = tools_dir / "seen-reviews.json"
     if not seen_file.exists():
         seen_file.write_text("[]")
-        print("[SEEN] seen-reviews.json initialized.")
+        print("[TOOLS] seen-reviews.json initialized.")
+    cache_file = tools_dir / "cache.json"
+    if not cache_file.exists():
+        cache_file.write_text("{}")
+        print("[TOOLS] cache.json initialized (empty, will fetch on first use).")
+
+    print("[TOOLS] check_reviews.py + post_review_reply.py written.")
 
 
 def _start_hermes():
@@ -229,7 +373,7 @@ def _start_hermes():
         # Clone repo
         try:
             _clone_repo()
-            _init_seen_file()
+            _init_tools()
         except Exception as e:
             print(f"[GIT WARN] Clone failed (non-fatal): {e}")
 
