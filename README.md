@@ -17,7 +17,50 @@ See the **Modal Cloud Deployment** section below.
 
 ---
 
-## 📁 Important Files
+## 📁 Project Structure
+
+```
+AlphaTours-Project/
+│
+├── 🏠 PRODUCTION FILES           # Website pages & assets
+│   ├── index.html, about.html, services.html, ...
+│   ├── styles.css, script.js
+│   ├── tours/                    # 18 individual tour pages
+│   ├── assets/                   # Images, videos (deployed to Netlify)
+│   ├── print-materials/          # PDFs & print prompts
+│   ├── proposals/                # Business proposals
+│   ├── skills/                   # AI agent skills
+│   ├── serve.mjs                 # Dev server
+│   └── netlify.toml              # Deployment config
+│
+├── 🛠️ ACTIVE TOOLS (git-tracked) # Review management & automation
+│   └── tools/                    # review-manager.mjs, review-watchdog.mjs, ...
+│
+├── 📚 DOCUMENTATION (git-tracked) # Reference & planning docs
+│   └── docs/                     # hermes-reference.md, plan.md, ...
+│
+├── 🚀 DEPLOYMENT                  # Bot deployment scripts
+│   ├── modal_deploy.py            # Cloud deployment
+│   └── start_telegram_gateway.py  # Local bot launcher
+│
+├── 🗑️ ARTIFACTS (gitignored)     # One-time scripts & logs
+│   ├── dev/                      # Debug/test scripts
+│   └── logs/                     # Runtime output files
+│
+├── 🎨 DESIGN (gitignored)         # Source design files
+│   └── design/                    # brand/, ai-generated/, marketing/, ...
+│
+├── 📋 CONFIG
+│   ├── AGENTS.md                  # AI agent knowledge
+│   ├── CLAUDE.MD                  # Agent instructions
+│   ├── .clinerules                # Cline rules
+│   ├── .gitignore                 # Git ignore rules
+│   └── README.md                  # This file!
+│
+└── ⚠️ KEY FILES (see table below)
+```
+
+### Key Files
 
 | File | What it does |
 |------|-------------|
@@ -27,7 +70,18 @@ See the **Modal Cloud Deployment** section below.
 | `AGENTS.md` | Backup copy of the bot's tour knowledge |
 | `README.md` | This file! |
 
+### Where Did Everything Go?
+
+After the May 2026 reorganization:
+| Moved From | Moved To | Purpose |
+|-----------|---------|---------|
+| `_test_*.py`, `_diagnose*.py`, etc. | `dev/` | One-time debug/test scripts |
+| `telegram_*.txt`, `_modal_*.txt` | `logs/` | Runtime log files |
+| `hermes-reference.md`, `plan.md` | `docs/` | Documentation |
+| `assets/images/Mascot/*` | `design/ai-generated/mascots/` | Unused production mascots |
+
 ---
+
 
 ## ✏️ How to Update Tours or Change the Bot's Voice
 

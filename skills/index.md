@@ -12,6 +12,7 @@ Questo è l'indice delle skills disponibili per Hermes. Quando il CEO chiede qua
 | 3 | **design-system** | `skills/design-system.md` | Linee guida frontend (colori, font, componenti, CSS) |
 | 4 | **self-improve** | `skills/self-improve.md` | Auto-apprendimento: crea/aggiorna skills su richiesta del CEO |
 | 5 | **review-watchdog** | `skills/review-manager.md` | Watchdog automatico: check ogni 6 ore + notifica Telegram |
+| 6 | **memory** | `.clinerules` (AgentKits Memory) | Memoria persistente: salva/recupera decisioni, pattern, errori tra sessioni Cline |
 
 ## Come usare una skill
 1. Identifica la skill appropriata dalla tabella sopra

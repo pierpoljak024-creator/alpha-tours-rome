@@ -1,0 +1,49 @@
+<!-- AgentKits Memory Rules START -->
+# AgentKits Memory — Cline
+
+This project uses AgentKits Memory for persistent project context across sessions.
+The following MCP tools are available via the "memory" server.
+
+## Memory Workflow (ALWAYS FOLLOW)
+
+0. `memory_status()` — Check if memories exist BEFORE searching
+1. `memory_save(content, category, tags)` — Save decisions, patterns, errors, context
+2. `memory_search(query)` — Get index with IDs (~50 tokens/result)
+3. `memory_timeline(anchor="ID")` — Get context around interesting results
+4. `memory_details(ids=["ID1","ID2"])` — Fetch full content ONLY for filtered IDs
+
+**IMPORTANT:** Do NOT call memory_search/timeline/details on empty memory — save first.
+
+## Also Available
+
+- `memory_recall(topic)` — Quick topic overview
+- `memory_list()` — List recent memories
+- `memory_update(id, content)` — Update existing memory
+- `memory_delete(ids)` — Remove outdated memories
+
+## When to Save Memories
+
+Save important context proactively using `memory_save(content, category, tags, importance)`:
+
+| Category | What to Save |
+|----------|-------------|
+| **decision** | Architectural choices, tech stack picks, trade-offs |
+| **pattern** | Coding conventions, project patterns, recurring approaches |
+| **error** | Bug fixes, error solutions, debugging insights |
+| **context** | Project background, team conventions, environment setup |
+| **observation** | What you learned during implementation |
+
+## Token Efficiency Rules
+
+1. ALWAYS start with `memory_search` (Layer 1), never jump to `memory_details`
+2. Review search results and select only relevant IDs before fetching details
+3. Use filters (category, date range) to narrow results
+4. Limit `memory_details` to 3-5 IDs per call
+5. This workflow saves ~87% tokens vs fetching everything at once
+
+## At Session Start
+
+1. Call `memory_status()` to check if memories exist
+2. If memories exist, call `memory_recall(topic)` for relevant project context
+3. Save important decisions and patterns as you work
+<!-- AgentKits Memory Rules END -->

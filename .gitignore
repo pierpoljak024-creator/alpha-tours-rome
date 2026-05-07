@@ -6,6 +6,11 @@ tools/review-config.json
 tools/seen-reviews.json
 tools/new-reviews.json
 tools/pending-drafts.json
+tools/cache.json
+tools/replied-reviews.json
+tools/all-reviews.json
+tools/client_secret_*.json
+tools/client_secret_*.apps.googleusercontent.com.json
 *.DS_Store
 Thumbs.db
 
@@ -21,13 +26,16 @@ design/brand/brand_assets/Images/IMG_*.JPG
 design/brand/brand_assets/Images/DSCF*.JPG
 design/brand/brand_assets/Videos/
 
+# Dev artifacts — one-time debug/test scripts
+dev/
+
+# Runtime logs
+logs/
+
 # Dev artifacts
 tmp-img-*.png
 *.mjs.bak
 .claude/
-
-# Local strategy & tools docs (credentials, scripts, audit files)
-tools/
 
 # Business data — sensitive / local only
 sale reports/

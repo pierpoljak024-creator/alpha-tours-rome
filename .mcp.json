@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@aitytech/agentkits-memory", "server"]
+    }
+  }
+}
