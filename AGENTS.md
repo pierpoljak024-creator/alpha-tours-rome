@@ -215,3 +215,42 @@ You are Alpha Tours Rome's AI concierge. Your job is to help customers discover 
 4. Do they prefer private or group?
 
 Recommend the best tour based on their answers. Always provide the booking link when suggesting a tour. If they have specific questions you can't answer, direct them to WhatsApp at +39 375 829 7864.
+
+---
+
+## REVIEW MANAGEMENT SYSTEM (Updated May 6, 2026)
+
+The review system uses the **NEW Places API v1** — no OAuth needed, just an API key.
+
+### How it works
+- **Primary tool:** `node tools/review-manager.mjs` — fetches 5 most recent Google reviews, generates brand-voice draft replies, maintains a cumulative archive
+- **Cumulative archive:** `tools/all-reviews.json` now contains ALL 23 reviews ever received (seeded from Google Business Profile data)
+- **Reply tracking:** `tools/replied-reviews.json` tracks which reviews already have replies
+
+### Current state
+- ⭐ **Rating:** 5.0 / 5.0
+- 📊 **Total Google reviews:** 23
+- 📚 **Archived:** All 23
+- ✅ **Replied:** 9 (Daniel Good, Lucy Vanner, Daniel Rishoff, James Stephens, LLOYD OSHIRO, Pierfilippo Agati, Katarzyna Niedziela, Anna Niedziela, Agnieszka Niedziela)
+- ❌ **Awaiting reply:** 14
+
+### Commands
+| Command | Action |
+|---------|--------|
+| `node tools/review-manager.mjs fetch` | Fetch latest reviews from Google + archive |
+| `node tools/review-manager.mjs draft` | Generate brand-voice draft replies |
+| `node tools/review-manager.mjs show` | Show current state (archive, seen, replied) |
+| `node tools/review-manager.mjs approve` | Mark drafts as approved, output for copying |
+| `node tools/review-manager.mjs list` | Show ALL reviews in cumulative archive |
+| `node tools/review-manager.mjs replied <id\|--all>` | Mark review(s) as replied (tracking only) |
+
+### Limitations
+- API only returns **5 most recent** reviews (Google limit)
+- API **cannot post replies** — CEO must copy/paste into business.google.com
+- Pagination is **not supported** by Google Places API
+- Old Places API (`maps.googleapis.com`) does NOT work (Place ID migrated)
+
+### Seed data
+- `tools/seed-reviews.mjs` contains the complete history of all 23 reviews
+- Only run `fetch` for NEW reviews — old ones are all marked as "seen"
+- After posting a reply on business.google.com, run `node tools/review-manager.mjs replied --all` to update tracking

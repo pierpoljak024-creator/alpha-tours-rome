@@ -1,68 +1,53 @@
-# 📋 Alpha Tours Rome — Project Plan
+# Piano: Sistema Gestione Recensioni — COPY/PASTE ONLY ✅
 
-## ✅ Completato
-- [x] Bot deployato su Modal (24/7)
-- [x] **CEO Mode**: SOUL.md riconosce owner (Telegram ID 5285215270)
-- [x] **web-editor skill**: Hermes modifica HTML + git push (base)
-- [x] **review-manager skill**: Hermes gestisce recensioni Google
-- [x] **Google Business Profile API**: OAuth 2.0 configurato
-- [x] **GitHub token** + **Google OAuth** su Modal secret
-- [x] `hermes doctor` ✅ — config locale OK
-- [x] **T1**: One-shot customer query test ✅
+> **⚠️ DECISIONE (06/05/2026): Solo copia/incolla**
+> Hermes NON posta automaticamente le reply via OAuth.
+> Workflow: Hermes genera draft → CEO copia/incolla su business.google.com → CEO conferma ("fatto") → Hermes aggiorna tracking (`replied --all`).
+> Il comando `post` in `tools/review-manager.mjs` è DISABLED.
 
-## 🔍 Scoperte Chiave (May 5, 2026)
-- [x] Hermes ha **browser toolset** (`navigate`, `click`, `type`, `scroll`) — può fare screenshot!
-- [x] Hermes ha **file toolset** (`read`, `write`, `patch`, `search`) — meglio di `python -c`
-- [x] Puppeteer già installato (`C:/Users/pierf/node_modules/puppeteer`)
-- [x] `serve.mjs` già pronto (server locale su localhost:3000)
-- [x] SOUL.md attuale ha problemi: dice "EXECUTE" (non esiste), path hardcoded per Modal, nessun visual loop, nessun rollback, nessun skills index
+## Stato attuale ✅
+- `tools/review-manager.mjs` — funziona: `fetch`, `draft`, `show`, `list`, `approve`, `replied`
+- Tracking: 3 replied (Niedziela) · 21 awaiting reply (nel file replied-reviews.json)
 
-## 🚀 Fase 1 — Skills System (da implementare)
-- [ ] Creare `skills/index.md` — registry skills
-- [ ] Creare `skills/web-editor.md` — skill modifica sito con preview visiva
-- [ ] Creare `skills/design-system.md` — regole frontend (colori, font, componenti)
-- [ ] Creare `skills/self-improve.md` — auto-miglioramento Hermes
+## Obiettivo
+Far sì che quando il CEO dice "check reviews" o "recensioni in attesa", Hermes:
+1. Esegue `fetch` per trovare nuove recensioni
+2. Genera draft brand-voice con `draft`
+3. Mostra i draft con `show` (CEO copia/incolla su business.google.com)
+4. Quando CEO conferma, esegue `replied --all` per aggiornare tracking
 
-## 🚀 Fase 2 — SOUL.md 2.0 (da implementare)
-- [ ] Riscrivere `~/.hermes/SOUL.md` con:
-  - Fix: "EXECUTE" → shell commands reali
-  - Fix: percorsi locali + Modal (dual mode)
-  - Nuovo: browser toolset per screenshot visivi
-  - Nuovo: visual loop check (screenshot PRIMA → conferma → modifica → screenshot DOPO → approvazione → commit)
-  - Nuovo: rollback (`git revert HEAD --no-edit && git push`)
-  - Nuovo: skills index reference
-  - Nuovo: self-improvement section
-  - Mantenuto: brand voice, tour data, FAQ
-- [ ] Aggiornare `modal_deploy.py` con stessa SOUL 2.0 inline
+---
 
-## 🚀 Fase 3 — TEST LIVE (da eseguire)
-- [ ] **Test A**: Hermes fa screenshot di una pagina e lo mostra ✅
-- [ ] **Test B**: Modifica semplice + screenshot PRIMA/DOPO + conferma CEO → commit
-- [ ] **Test C**: Rollback ("annulla")
-- [ ] **Test D**: Self-improvement — "Impara questo comando"
-- [ ] Deploy su Modal dopo test passati
+## Workflow finale
 
-## 📐 Protocollo Comunicazione (CEO → Hermes)
-```
-TU: "Sulla pagina [TOUR NAME], cambia [TESTO VECCHIO] con [TESTO NUOVO]"
-HERMES: 📸 Screenshot PRIMA + "Intendi questa parte?"
-TU: "Sì" / "No, l'altra"
-HERMES: Modifica + 📸 Screenshot DOPO
-HERMES: "Confermi la modifica?"
-TU: "Sì" → commit + push ✅
-TU: "No" / "Annulla" → git revert + restore
-```
+### Per il CEO
+1. **"check reviews"** → Hermes fa `fetch` → mostra nuove recensioni
+2. **"recensioni in attesa"** → Hermes fa `list` → mostra tutte con ✅/❌
+3. **"mostrami i draft"** → Hermes fa `show` → mostra drafts da copiare
+4. **"mostra le reply pronte"** → Hermes fa `show` → mostra i draft pronti
+5. **CEO copia/incolla su business.google.com manualmente**
+6. **"fatto" / "ho postato"** → Hermes fa `replied --all` → aggiorna tracking
 
-## 📁 Skills Registry (nuovo)
-| Skill | File | Scopo |
-|-------|------|-------|
-| review-manager | `skills/review-manager.md` | Recensioni Google |
-| web-editor | `skills/web-editor.md` | Modifica sito con preview |
-| design-system | `skills/design-system.md` | Linee guida frontend |
-| self-improve | `skills/self-improve.md` | Auto-apprendimento |
+### Comandi Hermes
+| CEO dice | Hermes esegue |
+|----------|---------------|
+| "check reviews" | `fetch` → mostra nuove |
+| "recensioni in attesa" | `list` → mostra tutte con ✅/❌ |
+| "mostrami i draft" | `show` → mostra drafts pending |
+| "fatto" / "ho postato" | `replied --all` → aggiorna tracking |
 
-## 📝 Note
-- **Google OAuth**: Credenziali su Modal secret (`alpha-tours-env`)
-- **Client secret**: Su Modal secret, mai in chiaro nel repo
-- **Refresh token**: Su Modal secret, mai in chiaro nel repo
-- **Google API**: 429 rate limit colpito — aspettare prima di testare recensioni
+---
+
+## Struttura dati
+- `tools/all-reviews.json` — Archivio cumulativo di tutte le 23 recensioni
+- `tools/seen-reviews.json` — IDs recensioni già processate
+- `tools/new-reviews.json` — Nuove recensioni non ancora draftate
+- `tools/pending-drafts.json` — Draft pronti per copia/incolla
+- `tools/replied-reviews.json` — IDs recensioni a cui è stata data reply
+- `tools/seed-reviews.mjs` — Script one-time per seed iniziale
+
+## Seed data
+- 23 recensioni totali (tutte ⭐5)
+- 9 con reply già postata su Google (da seed: hasReply=true)
+- 14 in attesa di reply
+- Le 5 più recenti arrivano da Places API, il resto è seedato

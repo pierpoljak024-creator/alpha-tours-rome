@@ -11,6 +11,7 @@ Questo è l'indice delle skills disponibili per Hermes. Quando il CEO chiede qua
 | 2 | **web-editor** | `skills/web-editor.md` | Modifica il sito web con preview visiva (screenshot PRIMA/DOPO) |
 | 3 | **design-system** | `skills/design-system.md` | Linee guida frontend (colori, font, componenti, CSS) |
 | 4 | **self-improve** | `skills/self-improve.md` | Auto-apprendimento: crea/aggiorna skills su richiesta del CEO |
+| 5 | **review-watchdog** | `skills/review-manager.md` | Watchdog automatico: check ogni 6 ore + notifica Telegram |
 
 ## Come usare una skill
 1. Identifica la skill appropriata dalla tabella sopra
